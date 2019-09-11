@@ -13,4 +13,4 @@ HEADERS += \
 
 INCLUDEPATH += /usr/autodesk/maya2018/include/
 
-LIBS += -L/usr/autodesk/maya2018/lib -lOpenMaya -lFoundation -lIMFbase
+LIBS += -L/usr/autodesk/maya2018/lib -lOpenMaya -lFoundation -lIMFbase -lOpenMayaAnim
