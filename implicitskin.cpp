@@ -4,11 +4,18 @@
 MTypeId ImplicitSkin::id(0x00000451);
 MObject ImplicitSkin::aBlendMesh;
 MObject ImplicitSkin::aBlendWeight;
+MObject ImplicitSkin::oPoint;
+MObject ImplicitSkin::iPoint;
+
 void* ImplicitSkin::creator() { return new ImplicitSkin; }
+
 
 MStatus ImplicitSkin::deform(MDataBlock& data, MItGeometry& itGeo, const MMatrix &localToWorldMatrix, unsigned int mIndex) {
 
   MStatus status;
+
+  cout << "TEST OUT!" << endl;
+  fflush(stdout);
 
   //get the envelope and blend weight
   float env = data.inputValue(envelope).asFloat();
@@ -22,11 +29,44 @@ MStatus ImplicitSkin::deform(MDataBlock& data, MItGeometry& itGeo, const MMatrix
       return MS::kSuccess;
   }
 
+
+
   //Get the blend points
   MFnMesh fnBlendMesh(oBlendMesh, &status);
   CHECK_MSTATUS_AND_RETURN_IT(status);
   MPointArray blendPoints;
   fnBlendMesh.getPoints(blendPoints);
+
+  MPoint iPt(data.inputValue(iPoint).asFloat3());
+
+  MDataHandle oPtHandle = data.outputValue(oPoint);
+
+
+  if(hrbfgen.getNeedRecalc())
+  {
+      int nPoints = itGeo.exactCount();
+      float* pts = new float[nPoints * 3];
+      float* norms = new float[nPoints * 3];
+
+      MPoint pt;
+      int idx;
+      for (; !itGeo.isDone(); itGeo.next()){
+          //Get the input point
+          pt = itGeo.position();
+          idx = itGeo.index();
+          pts[idx*3] = pt.x;
+          norms[idx*3] = pt.x;
+          pts[idx*3+1] = pt.y;
+          norms[idx*3+1] = pt.y;
+          pts[idx*3+2] = pt.z;
+          norms[idx*3+2] = pt.z;
+      }
+      hrbfgen.init(pts, nPoints * 3, norms, nPoints * 3);
+
+
+  }
+
+  oPtHandle.set(hrbfgen.eval(iPt.x, iPt.y, iPt.z));
 
   MPoint pt;
   float w = 0.0f;
@@ -56,6 +96,16 @@ MStatus ImplicitSkin::initialize(){
     nAttr.setKeyable(true);
     addAttribute(aBlendWeight);
     attributeAffects(aBlendWeight, outputGeom);
+
+    oPoint = nAttr.create("oPoint", "opt", MFnNumericData::kFloat);
+    nAttr.setWritable(false);
+    nAttr.setStorable(false);
+    addAttribute(oPoint);
+
+    iPoint = nAttr.create("iPoint", "ipt", MFnNumericData::k3Float);
+    nAttr.setKeyable(true);
+    addAttribute(iPoint);
+    attributeAffects(iPoint, oPoint);
 
     //Make the deformer weights paintable
     MGlobal::executeCommand("makePaintable -attrType multiFloat -sm deformer blendNode weights;");

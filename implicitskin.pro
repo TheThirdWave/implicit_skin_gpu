@@ -6,10 +6,12 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-    implicitskin.cpp
+    implicitskin.cpp \
+    hrbfgenerator.cpp
 
 HEADERS += \
-    implicitskin.h
+    implicitskin.h \
+    hrbfgenerator.h
 
 INCLUDEPATH += /usr/autodesk/maya2018/include/
 

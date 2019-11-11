@@ -19,6 +19,8 @@
 
 #include <maya/MPxDeformerNode.h>
 
+#include "hrbfgenerator.h"
+
 class ImplicitSkin : public MPxDeformerNode {
  public:
   ImplicitSkin() {}
@@ -29,6 +31,11 @@ class ImplicitSkin : public MPxDeformerNode {
   static MTypeId id;
   static MObject aBlendMesh;
   static MObject aBlendWeight;
+  static MObject iPoint;
+  static MObject oPoint;
+
+private:
+  HRBFGenerator hrbfgen;
 };
 
 #endif // IMPLICITSKIN_H

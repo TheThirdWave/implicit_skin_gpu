@@ -17,6 +17,7 @@ private:
     VectorXf mPoints;
 
 
+    bool recalc;
     float smoothfunc(float x, float y, float z);
     float derivx(float x, float y, float z);
     float derivy(float x, float y, float z);
@@ -32,17 +33,22 @@ private:
     float h22(float x, float y, float z);
 
 public:
+    HRBFGenerator();
     HRBFGenerator(float points[], int plen, float normals[], int nlen);
     ~HRBFGenerator();
 
 
     float eval(float x, float y, float z);
 
+    void init(float points[], int plen, float normals[], int nlen);
     void solve();
 
     MatrixXf* getCoefficients();
     VectorXf* getUnknowns();
     VectorXf* getResults();
+    bool getNeedRecalc();
+
+    void setRecalc(bool r);
 };
 
 #endif // HRBFGENERATOR_H

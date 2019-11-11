@@ -4,6 +4,11 @@
 
 using namespace Eigen;
 
+HRBFGenerator::HRBFGenerator()
+{
+    recalc = true;
+}
+
 HRBFGenerator::HRBFGenerator(float points[], int plen, float normals[], int nlen)
 {
     if(plen/3 != nlen/3)
@@ -48,6 +53,7 @@ HRBFGenerator::HRBFGenerator(float points[], int plen, float normals[], int nlen
         mPoints(idxi+1) = points[idxi+1];
         mPoints(idxi+2) = points[idxi+2];
     }
+    recalc = false;
     return;
 }
 
@@ -56,6 +62,54 @@ HRBFGenerator::~HRBFGenerator()
     coefficients.resize(0,0);
     unknowns.resize(0);
     results.resize(0);
+}
+
+void HRBFGenerator::init(float points[], int plen, float normals[], int nlen)
+{
+    if(plen/3 != nlen/3)
+    {
+        std::cout << "HRBFGEN ERROR: input arrays of different length!" << std::endl;
+        return;
+    }
+    int sidelen = plen/3;
+    coefficients.resize(sidelen*4, sidelen*4);
+    unknowns.resize(sidelen*4);
+    results.resize(sidelen*4);
+    mPoints.resize(sidelen*3);
+
+    for(int i = 0; i < 4*sidelen; i += 4)
+    {
+        int idxi = i / 4 * VECTORLEN;
+        for(int j = 0; j < 4*sidelen; j += 4)
+        {
+            int idxj = j / 4 * VECTORLEN;
+            coefficients(i,j) = smoothfunc(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+            coefficients(i,j+1) = -derivx(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+            coefficients(i,j+2) = -derivy(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+            coefficients(i,j+3) = -derivz(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+            coefficients(i+1,j) = derivx(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+            coefficients(i+1,j+1) = -h00(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+            coefficients(i+1,j+2) = -h01(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+            coefficients(i+1,j+3) = -h02(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+            coefficients(i+2,j) = derivy(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+            coefficients(i+2,j+1) = -h10(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+            coefficients(i+2,j+2) = -h11(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+            coefficients(i+2,j+3) = -h12(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+            coefficients(i+3,j) = derivz(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+            coefficients(i+3,j+1) = -h20(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+            coefficients(i+3,j+2) = -h21(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+            coefficients(i+3,j+3) = -h22(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
+        }
+        results(i) = 0;
+        results(i+1) = normals[idxi];
+        results(i+2) = normals[idxi+1];
+        results(i+3) = normals[idxi+2];
+        mPoints(idxi) = points[idxi];
+        mPoints(idxi+1) = points[idxi+1];
+        mPoints(idxi+2) = points[idxi+2];
+    }
+    recalc = false;
+    return;
 }
 
 float HRBFGenerator::eval(float x, float y, float z)
@@ -169,4 +223,14 @@ VectorXf* HRBFGenerator::getUnknowns()
 VectorXf* HRBFGenerator::getResults()
 {
     return &results;
+}
+
+bool HRBFGenerator::getNeedRecalc()
+{
+    return recalc;
+}
+
+void HRBFGenerator::setRecalc(bool r)
+{
+    recalc = r;
 }
