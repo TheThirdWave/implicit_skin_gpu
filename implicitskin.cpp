@@ -44,6 +44,8 @@ MStatus ImplicitSkin::deform(MDataBlock& data, MItGeometry& itGeo, const MMatrix
 
   if(hrbfgen.getNeedRecalc())
   {
+      cout << "START RECALC!" << endl;
+      fflush(stdout);
       int nPoints = itGeo.exactCount();
       float* pts = new float[nPoints * 3];
       float* norms = new float[nPoints * 3];
@@ -62,11 +64,18 @@ MStatus ImplicitSkin::deform(MDataBlock& data, MItGeometry& itGeo, const MMatrix
           norms[idx*3+2] = pt.z;
       }
       hrbfgen.init(pts, nPoints * 3, norms, nPoints * 3);
+      hrbfgen.solve();
 
 
   }
 
-  oPtHandle.set(hrbfgen.eval(iPt.x, iPt.y, iPt.z));
+  float outNum = hrbfgen.eval(iPt.x, iPt.y, iPt.z);
+
+
+  cout << iPt.x << ", " << iPt.y << ", " << iPt.z << endl;
+  cout << outNum << endl;
+  fflush(stdout);
+  oPtHandle.set(outNum);
 
   MPoint pt;
   float w = 0.0f;
