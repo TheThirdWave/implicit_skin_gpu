@@ -21,18 +21,26 @@
 
 #include "hrbfgenerator.h"
 
-class ImplicitSkin : public MPxDeformerNode {
- public:
-  ImplicitSkin() {}
-  virtual MStatus deform(MDataBlock& data, MItGeometry& itGeo, const MMatrix &localToWorldMatrix, unsigned int mIndex);
-  static void* creator();
-  static MStatus initialize();
-
-  static MTypeId id;
-  static MObject aBlendMesh;
-  static MObject aBlendWeight;
-  static MObject iPoint;
-  static MObject oPoint;
+#include <maya/MFnPlugin.h>
+#include <maya/MTypeId.h>
+#include <maya/MMatrixArray.h>
+#include <maya/MStringArray.h>
+#include <maya/MPxSkinCluster.h>
+#include <maya/MItGeometry.h>
+#include <maya/MPoint.h>
+#include <maya/MFnMatrixData.h>
+class ImplicitSkin : public MPxSkinCluster
+{
+public:
+    static  void*   creator();
+    static  MStatus initialize();
+    // Deformation function
+    //
+    virtual MStatus deform(MDataBlock&    block,
+                           MItGeometry&   iter,
+                           const MMatrix& mat,
+                           unsigned int multiIndex);
+    static const MTypeId id;
 
 private:
   HRBFGenerator hrbfgen;
