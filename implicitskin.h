@@ -20,6 +20,7 @@
 #include <maya/MPxDeformerNode.h>
 
 #include "hrbfgenerator.h"
+#include "hrbfmanager.h"
 
 #include <maya/MFnPlugin.h>
 #include <maya/MTypeId.h>

@@ -32,6 +32,32 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
 {
     MStatus returnStatus;
 
+    if(hrbfgen.getNeedRecalc())
+    {
+        cout << "START RECALC!" << endl;
+        fflush(stdout);
+        int nPoints = iter.exactCount();
+        float* pts = new float[nPoints * 3];
+        float* norms = new float[nPoints * 3];
+        MPoint pt;
+        int idx;
+        for (; !iter.isDone(); iter.next()){
+            //Get the input point
+            pt = iter.position();
+            idx = iter.index();
+            pts[idx*3] = pt.x;
+            norms[idx*3] = pt.x;
+            pts[idx*3+1] = pt.y;
+            norms[idx*3+1] = pt.y;
+            pts[idx*3+2] = pt.z;
+            norms[idx*3+2] = pt.z;
+        }
+        hrbfgen.init(pts, nPoints * 3, norms, nPoints * 3);
+        hrbfgen.solve();
+
+
+    }
+
     // get the influence transforms
     //
     MArrayDataHandle transformsHandle = block.inputArrayValue( matrix );
