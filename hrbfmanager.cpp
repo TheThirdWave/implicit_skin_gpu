@@ -9,3 +9,5 @@ bool HRBFManager::getNeedsRecalc()
 {
     return recalc;
 }
+
+

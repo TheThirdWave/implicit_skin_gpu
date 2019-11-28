@@ -32,7 +32,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
 {
     MStatus returnStatus;
 
-    if(hrbfgen.getNeedRecalc())
+    /*if(hrbfgen.getNeedRecalc())
     {
         cout << "START RECALC!" << endl;
         fflush(stdout);
@@ -56,10 +56,24 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         hrbfgen.solve();
 
 
+    }*/
+
+    // get input mesh.
+    MArrayDataHandle meshHandle = block.outputArrayValue( input );
+    MObject meshObject = meshHandle.outputValue().child( inputGeom ).asMesh();
+    if(meshObject.isNull())
+    {
+        std::cout << "poop" << endl;
     }
+    else
+    {
+        std::cout << "fart" << endl;
+    }
+
 
     // get the influence transforms
     //
+
     MArrayDataHandle transformsHandle = block.inputArrayValue( matrix );
     int numTransforms = transformsHandle.elementCount();
     if ( numTransforms == 0 ) {
