@@ -76,9 +76,19 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
     {
         cout << "START RECALC!" << endl;
         fflush(stdout);
+
+        //create new HRBFgenerator objects if none exist
+        if(hrbfs.getNumHRBFS() == 0)
+        {
+            cout << "Creating HRBFS!" << endl;
+            hrbfs.createHRBFS(numTransforms - 1);
+            fflush(stdout);
+        }
+
         int nPoints = iter.exactCount();
         float* pts = new float[nPoints * 3];
         float* norms = new float[nPoints * 3];
+        int* indicies = new int[nPoints];
         rawMat4x4* transformRaws = new rawMat4x4[numTransforms];
         MPoint pt;
         MVector norm;
@@ -96,16 +106,27 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
             norms[idx*3] = norm.x;
             norms[idx*3+1] = norm.y;
             norms[idx*3+2] = norm.z;
+            //sort out which hrbf the vertex shall be associated with using it's weight data (the joint it's most weighted to shall be the hrbf it's associated with)
+            // get the weights for this point
+            MArrayDataHandle weightsHandle = weightListHandle.inputValue().child( weights );
+            // compute the skinning
+            double weight = -1;
+            for ( int i=0; i<numTransforms; ++i ) {
+                if ( MS::kSuccess == weightsHandle.jumpToElement( i ) && weight < weightsHandle.inputValue().asDouble()) {
+                     weight = weightsHandle.inputValue().asDouble();
+                     indicies[idx] = i;
+                }
+            }
             count++;
         }
         iter.reset();
 
-        for(int i = 0; i < numTransforms; i++)
+        /*for(int i = 0; i < numTransforms; i++)
         {
             transforms[i].get(transformRaws[i]);
-        }
+        }*/
 
-        hrbfs.buildHRBFS(pts, nPoints * 3, norms, nPoints * 3);
+        hrbfs.initHRBFS(pts, nPoints * 3, norms, nPoints * 3, indicies, nPoints);
 
 
     }

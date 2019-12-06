@@ -17,8 +17,11 @@ private:
 
 public:
     HRBFManager();
-    bool buildHRBFS(float points[], int plen, float normals[], int nlen);
+    ~HRBFManager();
+    void createHRBFS(int n);
+    bool initHRBFS(float points[], int plen, float normals[], int nlen, float weights, int wlen);
     bool getNeedRecalc();
+    int getNumHRBFS();
 };
 
 #endif // HRBFMANAGER_H

@@ -4,6 +4,23 @@ HRBFManager::HRBFManager()
 {
     numHRBFS = 0;
     recalc = true;
+    hrbfs = NULL;
+}
+
+HRBFManager::~HRBFManager()
+{
+    delete[] hrbfs;
+}
+
+void HRBFManager::createHRBFS(int n)
+{
+    hrbfs = new HRBFGenerator[numHRBFS];
+    numHRBFS = n;
+}
+
+bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen, float weights, int wlen)
+{
+
 }
 
 bool HRBFManager::getNeedRecalc()
@@ -16,4 +33,7 @@ bool HRBFManager::getNeedRecalc()
     return recalc;
 }
 
-
+int HRBFManager::getNumHRBFS()
+{
+    return numHRBFS;
+}
