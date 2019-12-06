@@ -18,7 +18,7 @@ private:
 public:
     HRBFManager();
     bool buildHRBFS(float points[], int plen, float normals[], int nlen);
-    bool getNeedsRecalc();
+    bool getNeedRecalc();
 };
 
 #endif // HRBFMANAGER_H

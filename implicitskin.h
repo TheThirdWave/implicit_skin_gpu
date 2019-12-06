@@ -44,7 +44,7 @@ public:
     static const MTypeId id;
 
 private:
-  HRBFGenerator hrbfgen;
+  HRBFManager hrbfs;
 };
 
 #endif // IMPLICITSKIN_H
