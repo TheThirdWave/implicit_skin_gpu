@@ -1,7 +1,6 @@
 #include "implicitskin.h"
 #include <maya/MFnPlugin.h>
 
-typedef float rawMat4x4[4][4];
 
 const MTypeId ImplicitSkin::id( 0x00080030 );
 
@@ -89,7 +88,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         float* pts = new float[nPoints * 3];
         float* norms = new float[nPoints * 3];
         int* indicies = new int[nPoints];
-        rawMat4x4* transformRaws = new rawMat4x4[numTransforms];
+        float* transformPos = new float[numTransforms * 3];
         MPoint pt;
         MVector norm;
         int idx;
@@ -111,7 +110,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
             MArrayDataHandle weightsHandle = weightListHandle.inputValue().child( weights );
             // compute the skinning
             double weight = -1;
-            for ( int i=0; i<numTransforms; ++i ) {
+            for ( int i=0; i<numTransforms - 1; ++i ) {
                 if ( MS::kSuccess == weightsHandle.jumpToElement( i ) && weight < weightsHandle.inputValue().asDouble()) {
                      weight = weightsHandle.inputValue().asDouble();
                      indicies[idx] = i;
@@ -121,12 +120,15 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         }
         iter.reset();
 
-        /*for(int i = 0; i < numTransforms; i++)
+        for(int i = 0; i < numTransforms; i++)
         {
-            transforms[i].get(transformRaws[i]);
-        }*/
+            MVector p = MTransformationMatrix(transforms[i]).getTranslation(MSpace::kWorld);
+            transformPos[i * 3] = p.x;
+            transformPos[i * 3 + 1] = p.y;
+            transformPos[i * 3 + 2] = p.z;
+        }
 
-        hrbfs.initHRBFS(pts, nPoints * 3, norms, nPoints * 3, indicies, nPoints);
+        hrbfs.initHRBFS(pts, nPoints * 3, norms, nPoints * 3, indicies, nPoints, transformPos, numTransforms);
 
 
     }

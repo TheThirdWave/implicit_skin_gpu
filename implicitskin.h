@@ -12,6 +12,7 @@
 #include <maya/MItGeometry.h>
 #include <maya/MMatrix.h>
 #include <maya/MPointArray.h>
+#include <maya/MTransformationMatrix.h>
 
 #include <maya/MFnNumericAttribute.h>
 #include <maya/MFnTypedAttribute.h>

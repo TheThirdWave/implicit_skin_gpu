@@ -8,6 +8,8 @@
 using Eigen::MatrixXf;
 using Eigen::VectorXf;
 
+typedef float rawMat4x4[4][4];
+
 class HRBFGenerator
 {
 private:
@@ -15,6 +17,7 @@ private:
     VectorXf unknowns;
     VectorXf results;
     VectorXf mPoints;
+    float radius;
 
 
     bool recalc;
@@ -34,13 +37,13 @@ private:
 
 public:
     HRBFGenerator();
-    HRBFGenerator(float points[], int plen, float normals[], int nlen);
+    HRBFGenerator(std::vector<float> points, int plen, std::vector<float> normals, int nlen, Eigen::Vector3f startJoint, Eigen::Vector3f endJoint);
     ~HRBFGenerator();
 
 
     float eval(float x, float y, float z);
 
-    void init(float points[], int plen, float normals[], int nlen);
+    void init(std::vector<float> points, int plen, std::vector<float> normals, int nlen, Eigen::Vector3f startJoint, Eigen::Vector3f endJoint);
     void solve();
 
     MatrixXf* getCoefficients();
