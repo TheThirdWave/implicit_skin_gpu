@@ -23,7 +23,61 @@ HRBFGenerator::HRBFGenerator(std::vector<float> points, int plen, std::vector<fl
     results.resize(sidelen*4);
     mPoints.resize(sidelen*3);
     float largestR = 0;
+    float smallestR = -1;
 
+
+    //get the direction vector of the joint.
+    Eigen::Vector3f direction = (endJoint-startJoint);
+    Eigen::Vector3f directionNorm = direction / direction.norm();
+
+    //find largest distance and cull points that are too close for reasons.
+    for(int i = 0; i < plen; i = i + 3)
+    {
+        //find the distance of the point from the rigging bone.
+        Eigen::Vector3f pt = Eigen::Vector3f(points[i], points[i+1], points[i+2]);
+        //map the point onto the plane defined by the start of the joint and it's direction.
+        Eigen::Vector3f toPt = pt - startJoint;
+        Eigen::Vector3f ptPlane = pt - (toPt.dot(directionNorm) * directionNorm);
+        //the length of the vector between the start joint and the mapped point is the radial distance from the bone.
+        float dist = (ptPlane-endJoint).norm();
+        if(dist > largestR) largestR = dist;
+        if(dist < smallestR || smallestR == -1) smallestR = dist;
+        float a = (endJoint-startJoint).norm();
+        float cullPlane = (toPt.transpose() * direction);
+        cullPlane = cullPlane/(a * a);
+        if(cullPlane <= CULLDISTANCE || cullPlane >= 1.0 - CULLDISTANCE)
+        {
+            points.erase(points.begin()+i, points.begin()+i+3);
+            plen -= 3;
+            normals.erase(normals.begin()+i, normals.begin()+i+3);
+            nlen -= 3;
+        }
+    }
+    //update radius
+    radius = largestR;
+
+    //Add cap points to each end of the HRBF to allow for smooth deformation at the joints.
+    Eigen::Vector3f capPoint = endJoint + (directionNorm * smallestR);
+    points.push_back(capPoint(0));
+    points.push_back(capPoint(1));
+    points.push_back(capPoint(2));
+    plen += 3;
+    normals.push_back(directionNorm(0));
+    normals.push_back(directionNorm(1));
+    normals.push_back(directionNorm(2));
+    nlen += 3;
+    capPoint = startJoint - (directionNorm * smallestR);
+    points.push_back(capPoint(0));
+    points.push_back(capPoint(1));
+    points.push_back(capPoint(2));
+    plen += 3;
+    normals.push_back(directionNorm(0));
+    normals.push_back(directionNorm(1));
+    normals.push_back(directionNorm(2));
+    nlen += 3;
+
+
+    //BUILD ALL THE BIG MATRICES YOU NEED TO SOLVE FOR THE STUFF.
     for(int i = 0; i < 4*sidelen; i += 4)
     {
         int idxi = i / 4 * VECTORLEN;
@@ -54,15 +108,6 @@ HRBFGenerator::HRBFGenerator(std::vector<float> points, int plen, std::vector<fl
         mPoints(idxi) = points[idxi];
         mPoints(idxi+1) = points[idxi+1];
         mPoints(idxi+2) = points[idxi+2];
-        //find the distance of the point from the rigging bone.
-        Eigen::Vector3f pt = Eigen::Vector3f(points[idxi], points[idxi+1], points[idxi+2]);
-        //map the point onto the plane defined by the start of the joint and it's direction.
-        Eigen::Vector3f direction = (endJoint-startJoint);
-        direction = direction / direction.norm();
-        pt = pt - (pt.dot(direction) * direction);
-        //the length of the vector between the start joint and the mapped point is the radial distance from the bone.
-        float dist = (pt-endJoint).norm();
-        if(dist > largestR) radius = largestR;
     }
     recalc = false;
     return;
@@ -203,6 +248,36 @@ float HRBFGenerator::eval(float x, float y, float z)
     if(out < -radius) return 1;
     if(out > radius) return 0;
     return (-3.0/16.0)*pow(out/radius, 5) + (5.0/8.0)*pow(out/radius, 3) -(15.0/16.0)*(out/radius) + 0.5;
+}
+
+Vector3f HRBFGenerator::grad(float x, float y, float z)
+{
+    std::cout << "STARTING EVAL!!" << std::endl;
+    std::cout << "size = " << mPoints.size() << std::endl;
+    fflush(stdout);
+    Vector3f p(x, y, z);
+    Vector3f out(0);
+    for(int i = 0; i < mPoints.size()/3; i++)
+    {
+        int mpidx = i * 3;
+        int cidx = i * 4;
+        Vector3f vk(mPoints(mpidx), mPoints(mpidx+1), mPoints(mpidx+2));
+        float alpha = unknowns(cidx);
+        Vector3f beta(unknowns(cidx+1), unknowns(cidx+2), unknowns(cidx+3));
+        Vector3f diff = p - vk;
+        Vector3f grad(derivx(diff(0), diff(1), diff(2)), derivy(diff(0), diff(1), diff(2)), derivz(diff(0), diff(1), diff(2)));
+        Matrix3f hess;
+        hess << h00(diff(0), diff(1), diff(2)), h01(diff(0), diff(1), diff(2)), h02(diff(0), diff(1), diff(2)),
+                h10(diff(0), diff(1), diff(2)), h11(diff(0), diff(1), diff(2)), h12(diff(0), diff(1), diff(2)),
+                h20(diff(0), diff(1), diff(2)), h21(diff(0), diff(1), diff(2)), h22(diff(0), diff(1), diff(2));
+        //std::cout << alpha << std::endl;
+        //std::cout << beta(0) << "," << beta(1) << "," << beta(2) << " " << diff(0) << "," << diff(1) << "," << diff(2) << " " << grad(0) << "," << grad(1) << "," << grad(2) << std::endl;
+        out += alpha*grad - hess*beta;
+        //std::cout << out << std::endl;
+
+    }
+
+    return out;
 }
 
 void HRBFGenerator::solve()

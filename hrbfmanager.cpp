@@ -41,7 +41,20 @@ bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen,
 
 float HRBFManager::eval(float x, float y, float z)
 {
-
+    float fs[numHRBFS];
+    float final = 0;
+    //get input position values from each hrbf.
+    for(int i = 0; i < numHRBFS; i++)
+    {
+        fs[i] = hrbfs[i].eval(x, y, z);
+    }
+    //blend the values to get the final global function value.
+    //(right now I'm just taking the max).
+    for(int i = 0; i < numHRBFS-1; i++)
+    {
+        if(fs[i] > final) final = fs[i];
+    }
+    return final;
 }
 
 bool HRBFManager::getNeedRecalc()

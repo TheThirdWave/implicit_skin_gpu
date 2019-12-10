@@ -42,6 +42,7 @@ public:
 
 
     float eval(float x, float y, float z);
+    Eigen::Vector3f grad(float x, float y, float z);
 
     void init(std::vector<float> points, int plen, std::vector<float> normals, int nlen, Eigen::Vector3f startJoint, Eigen::Vector3f endJoint);
     void solve();
