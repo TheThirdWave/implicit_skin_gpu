@@ -59,9 +59,11 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         transformsHandle.next();
     }
     MArrayDataHandle bindHandle = block.inputArrayValue( bindPreMatrix );
+    rawMat4x4 inverseMatrices[numTransforms];
     if ( bindHandle.elementCount() > 0 ) {
         for ( int i=0; i<numTransforms; ++i ) {
             transforms[i] = MFnMatrixData( bindHandle.inputValue().data() ).matrix() * transforms[i];
+            MFnMatrixData( bindHandle.inputValue().data() ).matrix().get(inverseMatrices[i]);
             bindHandle.next();
         }
     }
