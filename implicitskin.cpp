@@ -148,9 +148,11 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
                 skinned += ( pt * transforms[i] ) * weightsHandle.inputValue().asDouble();
             }
         }
-
+        //adjust position using hrbfs to caculate self-intersections.
+        std::vector<float> adjustedPt = hrbfs.adjustToHRBF(pt.x, pt.y, pt.z, inverseMatrices, iter.index());
+        MPoint adjPt(adjustedPt[0], adjustedPt[1], adjustedPt[2]);
         // Set the final position.
-        iter.setPosition( skinned );
+        iter.setPosition( adjPt );
         // advance the weight list handle
         weightListHandle.next();
     }
