@@ -19,18 +19,29 @@ HRBFManager::~HRBFManager()
 
 void HRBFManager::createHRBFS(int n)
 {
-    hrbfs = new HRBFGenerator[numHRBFS];
     numHRBFS = n;
+    hrbfs = new HRBFGenerator[numHRBFS];
+    for(int i = 0; i < numHRBFS; i++)
+    {
+        hrbfs[i] = HRBFGenerator();
+    }
 }
 
 bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen, int weights[], int wlen, float jointPos[], int jlen)
 {
     std::vector<float> pts[numHRBFS];
     std::vector<float> norms[numHRBFS];
+    std::cout << "plen: " << plen << std::endl;
+    std::cout << "nlen: " << nlen << std::endl;
+    std::cout << "wlen: " << wlen << std::endl;
+    std::cout << "jlen: " << jlen << std::endl;
+    std::cout << "numhrbfs: " << numHRBFS << std::endl;
     isoVals.resize(plen);
     //sort out points and normals by weight
     for(int i = 0; i < wlen; i++)
     {
+        //std::cout << "vdata: " << i << std::endl;
+        //std::cout << weights[i] << std::endl;
         pts[weights[i]].push_back(points[i*3]);
         pts[weights[i]].push_back(points[i*3+1]);
         pts[weights[i]].push_back(points[i*3+2]);
@@ -40,12 +51,16 @@ bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen,
     }
     for(int i = 0; i < numHRBFS; i++)
     {
+        std::cout << "inithrbf: " << i << std::endl;
         hrbfs[i].init(pts[i], pts[i].size(), norms[i], norms[i].size(), Eigen::Vector3f(jointPos[i*3], jointPos[i*3+1], jointPos[i*3+1]), Eigen::Vector3f(jointPos[(i+1)*3], jointPos[(i+1)*3+1], jointPos[(i+1)*3+1]));
+        std::cout << "solvehrbf:" << i << std::endl;
+        hrbfs[i].solve();
     }
 
-    int* emptyIdx;
+    int* emptyIdx = new int;
     for(int i = 0; i < plen; i++)
     {
+        std::cout << "get isoval: " << i << std::endl;
         isoVals[i] = eval(points[i*3], points[i*3+1], points[i*3+2], &identity, emptyIdx);
     }
     return true;
@@ -98,7 +113,9 @@ Eigen::Vector3f HRBFManager::grad(float x, float y, float z, rawMat4x4 *invMats,
 
 std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x4 *invMats, int idx)
 {
-    int* maxIdx;
+    std::cout << x << " " << y << " " << z << std::endl;
+    fflush(stdout);
+    int* maxIdx = new int;
     float iso = eval(x, y, z, invMats, maxIdx);
     float isoDiff = iso - isoVals[idx];
     Eigen::Vector3f pt(x,y,z);
@@ -134,11 +151,14 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
 
 bool HRBFManager::getNeedRecalc()
 {
+    std::cout << "GET NEED RECALC: ";
     recalc = false;
+    if(numHRBFS <= 0) recalc = true;
     for(int i = 0; i < numHRBFS; i++)
     {
         if(hrbfs[i].getNeedRecalc() == true) recalc = true;
     }
+    std::cout << recalc << std::endl;
     return recalc;
 }
 

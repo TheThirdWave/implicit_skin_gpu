@@ -43,9 +43,10 @@ public:
                            const MMatrix& mat,
                            unsigned int multiIndex);
     static const MTypeId id;
+    void initHRBFS();
 
 private:
-  HRBFManager hrbfs;
+  HRBFManager* hrbfs = NULL;
 };
 
 #endif // IMPLICITSKIN_H

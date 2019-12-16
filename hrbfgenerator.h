@@ -17,10 +17,10 @@ static float identity[4][4] = {   1,0,0,0,
 class HRBFGenerator
 {
 private:
-    MatrixXf coefficients;
-    VectorXf unknowns;
-    VectorXf results;
-    VectorXf mPoints;
+    MatrixXf* coefficients;
+    VectorXf* unknowns;
+    VectorXf* results;
+    VectorXf* mPoints;
     float radius;
 
 

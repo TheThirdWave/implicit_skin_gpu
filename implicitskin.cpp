@@ -73,16 +73,17 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         return MS::kSuccess;
     }
 
-    if(hrbfs.getNeedRecalc())
+    initHRBFS();
+    if(hrbfs->getNeedRecalc())
     {
         cout << "START RECALC!" << endl;
         fflush(stdout);
 
         //create new HRBFgenerator objects if none exist
-        if(hrbfs.getNumHRBFS() == 0)
+        if(hrbfs->getNumHRBFS() == 0)
         {
             cout << "Creating HRBFS!" << endl;
-            hrbfs.createHRBFS(numTransforms - 1);
+            hrbfs->createHRBFS(numTransforms - 1);
             fflush(stdout);
         }
 
@@ -129,14 +130,16 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
             transformPos[i * 3 + 1] = p.y;
             transformPos[i * 3 + 2] = p.z;
         }
-
-        hrbfs.initHRBFS(pts, nPoints * 3, norms, nPoints * 3, indicies, nPoints, transformPos, numTransforms);
+        std::cout << "INIT HRBFS!" << std::endl;
+        hrbfs->initHRBFS(pts, nPoints * 3, norms, nPoints * 3, indicies, nPoints, transformPos, numTransforms);
 
 
     }
 
     // Iterate through each point in the geometry.
     //
+    cout << "START ITERATION!" << endl;
+    fflush(stdout);
     for ( ; !iter.isDone(); iter.next()) {
         MPoint pt = iter.position();
         MPoint skinned;
@@ -149,7 +152,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
             }
         }
         //adjust position using hrbfs to caculate self-intersections.
-        std::vector<float> adjustedPt = hrbfs.adjustToHRBF(pt.x, pt.y, pt.z, inverseMatrices, iter.index());
+        std::vector<float> adjustedPt = hrbfs->adjustToHRBF(pt.x, pt.y, pt.z, inverseMatrices, iter.index());
         MPoint adjPt(adjustedPt[0], adjustedPt[1], adjustedPt[2]);
         // Set the final position.
         iter.setPosition( adjPt );
@@ -179,4 +182,14 @@ MStatus uninitializePlugin( MObject obj )
     MFnPlugin plugin( obj );
     result = plugin.deregisterNode( ImplicitSkin::id );
     return result;
+}
+
+void ImplicitSkin::initHRBFS()
+{
+    std::cout << "making HRBFManager" << std::endl;
+    std::cout << hrbfs << std::endl;
+    if(hrbfs == NULL){
+
+        hrbfs = new HRBFManager();
+    }
 }
