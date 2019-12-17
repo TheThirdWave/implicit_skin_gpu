@@ -54,6 +54,7 @@ public:
     MatrixXf* getCoefficients();
     VectorXf* getUnknowns();
     VectorXf* getResults();
+    int getNumMPoints();
     bool getNeedRecalc();
 
     void setRecalc(bool r);

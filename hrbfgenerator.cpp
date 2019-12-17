@@ -248,7 +248,7 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
         int idxi = i / 4 * VECTORLEN;
         for(int j = 0; j < 4*sidelen; j += 4)
         {
-            std::cout << i << " " << j << std::endl;
+            //std::cout << i << " " << j << std::endl;
             int idxj = j / 4 * VECTORLEN;
             (*coefficients)(i,j) = smoothfunc(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
             (*coefficients)(i,j+1) = -derivx(points[idxi] - points[idxj], points[idxi+1] - points[idxj+1], points[idxi+2] - points[idxj+2]);
@@ -281,8 +281,8 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
 
 float HRBFGenerator::eval(float x, float y, float z)
 {
-    std::cout << "STARTING EVAL!!" << std::endl;
-    std::cout << "size = " << mPoints->size() << std::endl;
+    //std::cout << "STARTING EVAL!!" << std::endl;
+    //std::cout << "size = " << mPoints->size() << std::endl;
     fflush(stdout);
     Vector3f p(x, y, z);
     float out = 0;
@@ -308,9 +308,10 @@ float HRBFGenerator::eval(float x, float y, float z)
 
 Vector3f HRBFGenerator::grad(float x, float y, float z)
 {
-    std::cout << "STARTING EVAL!!" << std::endl;
+    std::cout << "STARTING GRAD EVAL!!" << std::endl;
     std::cout << "size = " << mPoints->size() << std::endl;
     fflush(stdout);
+    if(mPoints->size() <= 0) return Vector3f(0,0,0);
     Vector3f p(x, y, z);
     Vector3f out(0);
     for(int i = 0; i < mPoints->size()/3; i++)
@@ -326,10 +327,10 @@ Vector3f HRBFGenerator::grad(float x, float y, float z)
         hess << h00(diff(0), diff(1), diff(2)), h01(diff(0), diff(1), diff(2)), h02(diff(0), diff(1), diff(2)),
                 h10(diff(0), diff(1), diff(2)), h11(diff(0), diff(1), diff(2)), h12(diff(0), diff(1), diff(2)),
                 h20(diff(0), diff(1), diff(2)), h21(diff(0), diff(1), diff(2)), h22(diff(0), diff(1), diff(2));
-        //std::cout << alpha << std::endl;
-        //std::cout << beta(0) << "," << beta(1) << "," << beta(2) << " " << diff(0) << "," << diff(1) << "," << diff(2) << " " << grad(0) << "," << grad(1) << "," << grad(2) << std::endl;
+        std::cout << alpha << std::endl;
+        std::cout << beta(0) << "," << beta(1) << "," << beta(2) << " " << diff(0) << "," << diff(1) << "," << diff(2) << " " << grad(0) << "," << grad(1) << "," << grad(2) << std::endl;
         out += alpha*grad - hess*beta;
-        //std::cout << out << std::endl;
+        std::cout << out << std::endl;
 
     }
 
@@ -338,7 +339,15 @@ Vector3f HRBFGenerator::grad(float x, float y, float z)
 
 void HRBFGenerator::solve()
 {
-    *unknowns = coefficients->colPivHouseholderQr().solve(*results);
+    if(coefficients->cols() > 0)
+    {
+        std::cout << "coefficient cols: " << coefficients->cols() << std::endl;
+        *unknowns = coefficients->colPivHouseholderQr().solve(*results);
+    }
+    else
+    {
+        std::cout << "ERROR: tried to solve empty matrix!" << std::endl;
+    }
 }
 
 float HRBFGenerator::smoothfunc(float x, float y, float z)
@@ -428,6 +437,11 @@ VectorXf* HRBFGenerator::getUnknowns()
 VectorXf* HRBFGenerator::getResults()
 {
     return results;
+}
+
+int HRBFGenerator::getNumMPoints()
+{
+    return mPoints->size();
 }
 
 bool HRBFGenerator::getNeedRecalc()

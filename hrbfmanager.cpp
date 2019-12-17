@@ -60,7 +60,7 @@ bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen,
     int* emptyIdx = new int;
     for(int i = 0; i < plen; i++)
     {
-        std::cout << "get isoval: " << i << std::endl;
+        //std::cout << "get isoval: " << i << std::endl;
         isoVals[i] = eval(points[i*3], points[i*3+1], points[i*3+2], &identity, emptyIdx);
     }
     return true;
@@ -69,10 +69,12 @@ bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen,
 float HRBFManager::eval(float x, float y, float z, rawMat4x4* invMats, int* maxIdx)
 {
     float fs[numHRBFS];
-    float final = 0;
+    float final = -1;
     //get input position values from each hrbf.
     for(int i = 0; i < numHRBFS; i++)
     {
+        if(hrbfs[i].getNumMPoints() <= 0) continue;
+
         Eigen::Vector4f hrbfSpace;
         hrbfSpace << x, y, z, 1.0f;
         Eigen::Matrix4f invMat;
@@ -82,15 +84,20 @@ float HRBFManager::eval(float x, float y, float z, rawMat4x4* invMats, int* maxI
                     invMats[i][3][0], invMats[i][3][1], invMats[i][3][2], invMats[i][3][3];
         hrbfSpace = invMat * hrbfSpace;
         fs[i] = hrbfs[i].eval(hrbfSpace(0), hrbfSpace(1), hrbfSpace(2));
+        std::cout << fs[i] << " ";
     }
+    std::cout << std::endl;
     //blend the values to get the final global function value.
     //(right now I'm just taking the max).
     for(int i = 0; i < numHRBFS-1; i++)
     {
+        if(hrbfs[i].getNumMPoints() <= 0) continue;
         if(fs[i] > final)
         {
             final = fs[i];
             *maxIdx = i;
+            std::cout << maxIdx << std::endl;
+            std::cout << *maxIdx << std::endl;
         }
     }
     return final;
@@ -102,6 +109,7 @@ Eigen::Vector3f HRBFManager::grad(float x, float y, float z, rawMat4x4 *invMats,
     Eigen::Vector4f hrbfSpace;
     hrbfSpace << x, y, z, 1.0f;
     Eigen::Matrix4f invMat;
+    std::cout << "matIdx: " << matIdx << std::endl;
     invMat <<   invMats[i][0][0], invMats[i][0][1], invMats[i][0][2], invMats[i][0][3],
                 invMats[i][1][0], invMats[i][1][1], invMats[i][1][2], invMats[i][1][3],
                 invMats[i][2][0], invMats[i][2][1], invMats[i][2][2], invMats[i][2][3],
@@ -116,6 +124,7 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
     std::cout << x << " " << y << " " << z << std::endl;
     fflush(stdout);
     int* maxIdx = new int;
+    std::cout << maxIdx << std::endl;
     float iso = eval(x, y, z, invMats, maxIdx);
     float isoDiff = iso - isoVals[idx];
     Eigen::Vector3f pt(x,y,z);
@@ -123,6 +132,9 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
     Eigen::Vector3f oldGrad;
 
     //Get the gradient at the point we're evaluating.
+    std::cout << maxIdx << std::endl;
+    std::cout << *maxIdx << std::endl;
+    fflush(stdout);
     ptGrad = grad(x, y, z, invMats, *maxIdx);
     oldGrad = ptGrad;
 
@@ -140,6 +152,7 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
         iso = eval(x, y, z, invMats, maxIdx);
         isoDiff = iso - isoVals[idx];
         oldGrad = ptGrad;
+        std::cout << *maxIdx << std::endl;
         ptGrad = grad(x, y, z, invMats, *maxIdx);
         float gAngle = ptGrad.dot(oldGrad);
         gAngle = gAngle/(ptGrad.norm() * oldGrad.norm());

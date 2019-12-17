@@ -118,7 +118,9 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
                      weight = weightsHandle.inputValue().asDouble();
                      indicies[idx] = i;
                 }
+                std::cout << weightsHandle.inputValue().asDouble();
             }
+            std::cout << std::endl;
             count++;
         }
         iter.reset();
