@@ -140,6 +140,8 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
     fflush(stdout);
     int sidelen = plen/3;
     std::cout << "sidelen: "<< sidelen << std::endl;
+    std::cout << "StartJoint: " << startJoint << std::endl;
+    std::cout << "EndJoint: " << endJoint << std::endl;
     fflush(stdout);
     std::cout << coefficients << std::endl;
     if(coefficients != nullptr)
@@ -197,7 +199,7 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
         Eigen::Vector3f toPt = pt - startJoint;
         Eigen::Vector3f ptPlane = pt - (toPt.dot(directionNorm) * directionNorm);
         //the length of the vector between the start joint and the mapped point is the radial distance from the bone.
-        float dist = (ptPlane-endJoint).norm();
+        float dist = (ptPlane-startJoint).norm();
         if(dist > largestR) largestR = dist;
         if(dist < smallestR || smallestR == -1) smallestR = dist;
         float a = (endJoint-startJoint).norm();
@@ -216,6 +218,7 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
     fflush(stdout);
     //update radius
     radius = largestR;
+    std::cout << "RADIUS: " << radius << std::endl;
 
     std::cout << "add cap points" << std::endl;
     fflush(stdout);
@@ -301,6 +304,7 @@ float HRBFGenerator::eval(float x, float y, float z)
         //std::cout << out << std::endl;
 
     }
+    std::cout << out << std::endl;
     if(out < -radius) return 1;
     if(out > radius) return 0;
     return (-3.0/16.0)*pow(out/radius, 5) + (5.0/8.0)*pow(out/radius, 3) -(15.0/16.0)*(out/radius) + 0.5;
@@ -313,26 +317,39 @@ Vector3f HRBFGenerator::grad(float x, float y, float z)
     fflush(stdout);
     if(mPoints->size() <= 0) return Vector3f(0,0,0);
     Vector3f p(x, y, z);
-    Vector3f out(0);
+    std::cout << p << std::endl;
+    fflush(stdout);
+    Vector3f out(0, 0, 0);
+    //std::cout << out << std::endl;
+    fflush(stdout);
     for(int i = 0; i < mPoints->size()/3; i++)
     {
         int mpidx = i * 3;
         int cidx = i * 4;
+        //std::cout << "idxs: " << mpidx << " " << cidx << std::endl;
+        fflush(stdout);
         Vector3f vk((*mPoints)(mpidx), (*mPoints)(mpidx+1), (*mPoints)(mpidx+2));
+        //std::cout << vk << std::endl;
+        fflush(stdout);
         float alpha = (*unknowns)(cidx);
+        //std::cout << alpha << std::endl;
         Vector3f beta((*unknowns)(cidx+1), (*unknowns)(cidx+2), (*unknowns)(cidx+3));
+        //std::cout << beta << std::endl;
         Vector3f diff = p - vk;
+        //std::cout << diff << std::endl;
         Vector3f grad(derivx(diff(0), diff(1), diff(2)), derivy(diff(0), diff(1), diff(2)), derivz(diff(0), diff(1), diff(2)));
+        //std::cout << grad << std::endl;
         Matrix3f hess;
         hess << h00(diff(0), diff(1), diff(2)), h01(diff(0), diff(1), diff(2)), h02(diff(0), diff(1), diff(2)),
                 h10(diff(0), diff(1), diff(2)), h11(diff(0), diff(1), diff(2)), h12(diff(0), diff(1), diff(2)),
                 h20(diff(0), diff(1), diff(2)), h21(diff(0), diff(1), diff(2)), h22(diff(0), diff(1), diff(2));
-        std::cout << alpha << std::endl;
-        std::cout << beta(0) << "," << beta(1) << "," << beta(2) << " " << diff(0) << "," << diff(1) << "," << diff(2) << " " << grad(0) << "," << grad(1) << "," << grad(2) << std::endl;
+        //std::cout << alpha << std::endl;
+        //std::cout << beta(0) << "," << beta(1) << "," << beta(2) << " " << diff(0) << "," << diff(1) << "," << diff(2) << " " << grad(0) << "," << grad(1) << "," << grad(2) << std::endl;
         out += alpha*grad - hess*beta;
-        std::cout << out << std::endl;
+        //std::cout << out << std::endl;
 
     }
+    std::cout << "GRAD OUT: " << out << std::endl;
 
     return out;
 }

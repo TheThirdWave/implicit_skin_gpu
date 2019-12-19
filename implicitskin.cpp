@@ -128,6 +128,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         for(int i = 0; i < numTransforms; i++)
         {
             MVector p = MTransformationMatrix(transforms[i]).getTranslation(MSpace::kWorld);
+            std::cout << "pT: " << p << std::endl;
             transformPos[i * 3] = p.x;
             transformPos[i * 3 + 1] = p.y;
             transformPos[i * 3 + 2] = p.z;
@@ -154,7 +155,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
             }
         }
         //adjust position using hrbfs to caculate self-intersections.
-        std::vector<float> adjustedPt = hrbfs->adjustToHRBF(pt.x, pt.y, pt.z, inverseMatrices, iter.index());
+        std::vector<float> adjustedPt = hrbfs->adjustToHRBF(skinned.x, skinned.y, skinned.z, inverseMatrices, iter.index());
         MPoint adjPt(adjustedPt[0], adjustedPt[1], adjustedPt[2]);
         // Set the final position.
         iter.setPosition( adjPt );

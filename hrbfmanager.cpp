@@ -52,7 +52,7 @@ bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen,
     for(int i = 0; i < numHRBFS; i++)
     {
         std::cout << "inithrbf: " << i << std::endl;
-        hrbfs[i].init(pts[i], pts[i].size(), norms[i], norms[i].size(), Eigen::Vector3f(jointPos[i*3], jointPos[i*3+1], jointPos[i*3+1]), Eigen::Vector3f(jointPos[(i+1)*3], jointPos[(i+1)*3+1], jointPos[(i+1)*3+1]));
+        hrbfs[i].init(pts[i], pts[i].size(), norms[i], norms[i].size(), Eigen::Vector3f(jointPos[i*3], jointPos[i*3+1], jointPos[i*3+2]), Eigen::Vector3f(jointPos[(i+1)*3], jointPos[(i+1)*3+1], jointPos[(i+1)*3+2]));
         std::cout << "solvehrbf:" << i << std::endl;
         hrbfs[i].solve();
     }
@@ -125,9 +125,23 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
     fflush(stdout);
     int* maxIdx = new int;
     std::cout << maxIdx << std::endl;
+    //get iso value for current point.
     float iso = eval(x, y, z, invMats, maxIdx);
+    std::cout << "EVALOUT: " << iso << std::endl;
+    fflush(stdout);
     float isoDiff = iso - isoVals[idx];
-    Eigen::Vector3f pt(x,y,z);
+    //translate input point to hrbf space.
+    Eigen::Vector4f hrbfSpace;
+    Eigen::Vector4f worldSpace;
+    hrbfSpace << x, y, z, 1.0f;
+    Eigen::Matrix4f invMat;
+    invMat <<   invMats[*maxIdx][0][0], invMats[*maxIdx][0][1], invMats[*maxIdx][0][2], invMats[*maxIdx][0][3],
+                invMats[*maxIdx][1][0], invMats[*maxIdx][1][1], invMats[*maxIdx][1][2], invMats[*maxIdx][1][3],
+                invMats[*maxIdx][2][0], invMats[*maxIdx][2][1], invMats[*maxIdx][2][2], invMats[*maxIdx][2][3],
+                invMats[*maxIdx][3][0], invMats[*maxIdx][3][1], invMats[*maxIdx][3][2], invMats[*maxIdx][3][3];
+    hrbfSpace = invMat * hrbfSpace;
+    Eigen::Matrix4f origMat = invMat.inverse();
+    Eigen::Vector3f pt(hrbfSpace(0),hrbfSpace(1),hrbfSpace(2));
     Eigen::Vector3f ptGrad;
     Eigen::Vector3f oldGrad;
 
@@ -147,13 +161,20 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
     //(The angle discontinuity suggests we've hit another HRBF and so we should stop to prevent self-intersection)
     while(isoDiff > MINISODIFFERENCE && gAngle < DISCONTINUITYANGLE)
     {
+        std::cout << "ISODIFF: " << isoDiff << std::endl;
         pt = pt + PROJECTIONNUM * (isoDiff) * (ptGrad/(ptGrad.norm()*ptGrad.norm()));
 
-        iso = eval(x, y, z, invMats, maxIdx);
+        //after adjusting the hrbfspace point, translate pt back to world space since that's what eval expects.
+        hrbfSpace << pt(0), pt(1), pt(2), 1.0f;
+        worldSpace = origMat * hrbfSpace;
+
+        iso = eval(hrbfSpace(0),hrbfSpace(1),hrbfSpace(2), invMats, maxIdx);
+        std::cout << "EVALOUT: " << iso << std::endl;
+        fflush(stdout);
         isoDiff = iso - isoVals[idx];
         oldGrad = ptGrad;
         std::cout << *maxIdx << std::endl;
-        ptGrad = grad(x, y, z, invMats, *maxIdx);
+        ptGrad = grad(hrbfSpace(0),hrbfSpace(1),hrbfSpace(2), invMats, *maxIdx);
         float gAngle = ptGrad.dot(oldGrad);
         gAngle = gAngle/(ptGrad.norm() * oldGrad.norm());
         gAngle = std::acos(gAngle);
