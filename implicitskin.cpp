@@ -60,9 +60,11 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
     }
     MArrayDataHandle bindHandle = block.inputArrayValue( bindPreMatrix );
     rawMat4x4 inverseMatrices[numTransforms];
+    MMatrixArray invTransforms;
     if ( bindHandle.elementCount() > 0 ) {
         for ( int i=0; i<numTransforms; ++i ) {
             transforms[i] = MFnMatrixData( bindHandle.inputValue().data() ).matrix() * transforms[i];
+            invTransforms.append(MFnMatrixData( bindHandle.inputValue().data() ).matrix());
             MFnMatrixData( bindHandle.inputValue().data() ).matrix().get(inverseMatrices[i]);
             bindHandle.next();
         }
@@ -127,7 +129,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
 
         for(int i = 0; i < numTransforms; i++)
         {
-            MVector p = MTransformationMatrix(transforms[i]).getTranslation(MSpace::kWorld);
+            MVector p = MTransformationMatrix(invTransforms[i]).getTranslation(MSpace::kWorld);
             std::cout << "pT: " << p << std::endl;
             transformPos[i * 3] = p.x;
             transformPos[i * 3 + 1] = p.y;
