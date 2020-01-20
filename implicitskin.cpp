@@ -65,10 +65,20 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         for ( int i=0; i<numTransforms; ++i ) {
             transforms[i] = MFnMatrixData( bindHandle.inputValue().data() ).matrix() * transforms[i];
             invTransforms.append(MFnMatrixData( bindHandle.inputValue().data() ).matrix());
-            MFnMatrixData( bindHandle.inputValue().data() ).matrix().get(inverseMatrices[i]);
+            transforms[i].inverse().get(inverseMatrices[i]);
+            std::cout << "INVMAT" << i << ": " << std::endl;
+            for(int j = 0; j < 4; j++)
+            {
+                for(int k = 0; k < 4; k++)
+                {
+                    std::cout << inverseMatrices[i][j][k] << " ";
+                }
+                std::cout << std::endl;
+            }
             bindHandle.next();
         }
     }
+
     MArrayDataHandle weightListHandle = block.inputArrayValue( weightList );
     if ( weightListHandle.elementCount() == 0 ) {
         // no weights - nothing to do

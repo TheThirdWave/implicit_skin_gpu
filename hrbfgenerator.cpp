@@ -312,8 +312,8 @@ float HRBFGenerator::eval(float x, float y, float z)
 
 Vector3f HRBFGenerator::grad(float x, float y, float z)
 {
-    std::cout << "STARTING GRAD EVAL!!" << std::endl;
-    std::cout << "size = " << mPoints->size() << std::endl;
+    //std::cout << "STARTING GRAD EVAL!!" << std::endl;
+    //std::cout << "size = " << mPoints->size() << std::endl;
     fflush(stdout);
     if(mPoints->size() <= 0) return Vector3f(0,0,0);
     Vector3f p(x, y, z);
