@@ -3,6 +3,7 @@
 
 
 const MTypeId ImplicitSkin::id( 0x00080030 );
+MObject ImplicitSkin::aHRBFRecalc;
 
 void* ImplicitSkin::creator()
 {
@@ -11,6 +12,13 @@ void* ImplicitSkin::creator()
 
 MStatus ImplicitSkin::initialize()
 {
+    MFnNumericAttribute nHRBFRecalc;
+
+    aHRBFRecalc = nHRBFRecalc.create("Recalc", "recalc", MFnNumericData::kBoolean);
+    nHRBFRecalc.setWritable(true);
+    nHRBFRecalc.setKeyable(true);
+    addAttribute(aHRBFRecalc);
+
     return MStatus::kSuccess;
 }
 
@@ -180,6 +188,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
 //
 MStatus initializePlugin( MObject obj )
 {
+
     MStatus result;
     MFnPlugin plugin( obj, PLUGIN_COMPANY, "3.0", "Any");
     result = plugin.registerNode(

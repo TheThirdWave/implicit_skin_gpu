@@ -34,6 +34,7 @@
 class ImplicitSkin : public MPxSkinCluster
 {
 public:
+
     static  void*   creator();
     static  MStatus initialize();
     // Deformation function
@@ -44,6 +45,8 @@ public:
                            unsigned int multiIndex);
     static const MTypeId id;
     void initHRBFS();
+
+    static MObject aHRBFRecalc;
 
 private:
   HRBFManager* hrbfs = NULL;
