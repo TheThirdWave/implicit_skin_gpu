@@ -93,6 +93,15 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         return MS::kSuccess;
     }
 
+    if(block.inputValue(aHRBFRecalc).asBool() == true)
+    {
+        MDataHandle reset = block.inputValue(aHRBFRecalc);
+        reset.setBool(false);
+        reset.setClean();
+        hrbfs->clearHRBFS();
+        hrbfs->setNeedRecalc(true);
+    }
+
     initHRBFS();
     if(hrbfs->getNeedRecalc())
     {
@@ -133,12 +142,13 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
             MArrayDataHandle weightsHandle = weightListHandle.inputValue().child( weights );
             // compute the skinning
             double weight = -1;
+            std::cout << idx << " " << weightsHandle.elementCount() << ": ";
             for ( int i=0; i<numTransforms - 1; ++i ) {
                 if ( MS::kSuccess == weightsHandle.jumpToElement( i ) && weight < weightsHandle.inputValue().asDouble()) {
                      weight = weightsHandle.inputValue().asDouble();
                      indicies[idx] = i;
+                     std::cout << i << ": " << weightsHandle.inputValue().asDouble() << " ";
                 }
-                std::cout << weightsHandle.inputValue().asDouble();
             }
             std::cout << std::endl;
             count++;
@@ -172,6 +182,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         for ( int i=0; i<numTransforms; ++i ) {
             if ( MS::kSuccess == weightsHandle.jumpToElement( i ) ) {
                 skinned += ( pt * transforms[i] ) * weightsHandle.inputValue().asDouble();
+                std::cout << "tidx: " << i << std::endl;
             }
         }
         //adjust position using hrbfs to caculate self-intersections.

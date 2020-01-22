@@ -27,6 +27,13 @@ void HRBFManager::createHRBFS(int n)
     }
 }
 
+void HRBFManager::clearHRBFS()
+{
+    delete[] hrbfs;
+    isoVals.clear();
+    numHRBFS = 0;
+}
+
 bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen, int weights[], int wlen, float jointPos[], int jlen)
 {
     std::vector<float> pts[numHRBFS];
@@ -181,6 +188,7 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
         std::cout << "EVALOUT: " << iso << std::endl;
         fflush(stdout);
         isoDiff = iso - isoVals[idx];
+        std::cout << "ISODIFF: " << isoDiff << std::endl;
         oldGrad = ptGrad;
         //std::cout << *maxIdx << std::endl;
         ptGrad = grad(worldSpace(0),worldSpace(1),worldSpace(2), invMats, *maxIdx);
@@ -190,6 +198,14 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
         gAngle = gAngle/(2*PI) * 360;
     }
     return std::vector<float> { pt(0), pt(1), pt(2) };
+}
+
+void HRBFManager::setNeedRecalc(bool r)
+{
+    for(int i = 0; i < numHRBFS; i++)
+    {
+        hrbfs[i].setRecalc(true);
+    }
 }
 
 bool HRBFManager::getNeedRecalc()
