@@ -143,16 +143,24 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
             // compute the skinning
             double weight = -1;
             std::cout << idx << " " << weightsHandle.elementCount() << ": ";
-            for ( int i=0; i<numTransforms - 1; ++i ) {
-                if ( MS::kSuccess == weightsHandle.jumpToElement( i ) && weight < weightsHandle.inputValue().asDouble()) {
-                     weight = weightsHandle.inputValue().asDouble();
-                     indicies[idx] = i;
-                     std::cout << i << ": " << weightsHandle.inputValue().asDouble() << " ";
+            for ( int i=0; i<numTransforms; ++i ) {
+                if ( MS::kSuccess == weightsHandle.jumpToElement( i ) ) {
+
+                    double holdWeight = weightsHandle.inputValue().asDouble();
+
+                    if(weight < holdWeight && i < (numTransforms-1))
+                    {
+                        weight = holdWeight;
+                        indicies[idx] = i;
+                    }
+                    std::cout << i << ": " << weightsHandle.inputValue().asDouble() << " ";
                 }
             }
-            std::cout << std::endl;
+            std::cout << indicies[idx] << std::endl;
+            weightListHandle.next();
             count++;
         }
+        weightListHandle.jumpToElement(0);
         iter.reset();
 
         for(int i = 0; i < numTransforms; i++)
@@ -175,6 +183,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
     fflush(stdout);
     for ( ; !iter.isDone(); iter.next()) {
         MPoint pt = iter.position();
+        std::cout << "PTIDX: " << iter.index() << std::endl;
         MPoint skinned;
         // get the weights for this point
         MArrayDataHandle weightsHandle = weightListHandle.inputValue().child( weights );
