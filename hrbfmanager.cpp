@@ -34,7 +34,7 @@ void HRBFManager::clearHRBFS()
     numHRBFS = 0;
 }
 
-bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen, int weights[], int wlen, float jointPos[], int jlen)
+bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen, std::vector<int> weights[], int wlen, float jointPos[], int jlen)
 {
     std::vector<float> pts[numHRBFS];
     std::vector<float> norms[numHRBFS];
@@ -49,12 +49,15 @@ bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen,
     {
         //std::cout << "vdata: " << i << std::endl;
         //std::cout << weights[i] << std::endl;
-        pts[weights[i]].push_back(points[i*3]);
-        pts[weights[i]].push_back(points[i*3+1]);
-        pts[weights[i]].push_back(points[i*3+2]);
-        norms[weights[i]].push_back(normals[i*3]);
-        norms[weights[i]].push_back(normals[i*3+1]);
-        norms[weights[i]].push_back(normals[i*3+2]);
+        for(int j = 0; j < weights[i].size(); j++)
+        {
+            pts[weights[i][j]].push_back(points[i*3]);
+            pts[weights[i][j]].push_back(points[i*3+1]);
+            pts[weights[i][j]].push_back(points[i*3+2]);
+            norms[weights[i][j]].push_back(normals[i*3]);
+            norms[weights[i][j]].push_back(normals[i*3+1]);
+            norms[weights[i][j]].push_back(normals[i*3+2]);
+        }
     }
     for(int i = 0; i < numHRBFS; i++)
     {
@@ -92,7 +95,7 @@ float HRBFManager::eval(float x, float y, float z, rawMat4x4* invMats, int* maxI
         hrbfSpace = hrbfSpace.transpose() * invMat;
         std::cout << "EVAL " << i << " HRBFSPACE: " << hrbfSpace << std::endl;
         fs[i] = hrbfs[i].eval(hrbfSpace(0), hrbfSpace(1), hrbfSpace(2));
-        //std::cout << fs[i] << " ";
+        std::cout << fs[i] << std::endl;
     }
     //std::cout << std::endl;
     //blend the values to get the final global function value.

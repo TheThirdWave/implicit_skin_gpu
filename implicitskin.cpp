@@ -119,7 +119,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         int nPoints = iter.exactCount();
         float* pts = new float[nPoints * 3];
         float* norms = new float[nPoints * 3];
-        int* indicies = new int[nPoints];
+        std::vector<int>* indicies = new std::vector<int>[nPoints];
         float* transformPos = new float[numTransforms * 3];
         MPoint pt;
         MVector norm;
@@ -148,15 +148,18 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
 
                     double holdWeight = weightsHandle.inputValue().asDouble();
 
-                    if(weight < holdWeight && i < (numTransforms-1))
+                    if(i < numTransforms-1)//(weight < holdWeight && i < (numTransforms-1))
                     {
                         weight = holdWeight;
-                        indicies[idx] = i;
+                        indicies[idx].push_back(i);
                     }
                     std::cout << i << ": " << weightsHandle.inputValue().asDouble() << " ";
                 }
             }
-            std::cout << indicies[idx] << std::endl;
+            for(int i = 0; i <indicies[idx].size(); i++)
+            {
+                std::cout << indicies[idx][i] << std::endl;
+            }
             weightListHandle.next();
             count++;
         }
@@ -165,7 +168,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
 
         for(int i = 0; i < numTransforms; i++)
         {
-            MVector p = MTransformationMatrix(invTransforms[i]).getTranslation(MSpace::kWorld);
+            MVector p = MTransformationMatrix(invTransforms[i].inverse()).getTranslation(MSpace::kWorld);
             std::cout << "pT: " << p << std::endl;
             transformPos[i * 3] = p.x;
             transformPos[i * 3 + 1] = p.y;
