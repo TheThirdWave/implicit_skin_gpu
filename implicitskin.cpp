@@ -175,7 +175,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
             transformPos[i * 3 + 2] = p.z;
         }
         std::cout << "INIT HRBFS!" << std::endl;
-        hrbfs->initHRBFS(pts, nPoints * 3, norms, nPoints * 3, indicies, nPoints, transformPos, numTransforms);
+        hrbfs->initHRBFS(pts, nPoints * 3, norms, nPoints * 3, indicies, nPoints, transformPos, inverseMatrices, numTransforms);
 
 
     }
