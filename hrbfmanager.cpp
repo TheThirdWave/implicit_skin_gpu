@@ -43,7 +43,7 @@ bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen,
     std::cout << "wlen: " << wlen << std::endl;
     std::cout << "jlen: " << jlen << std::endl;
     std::cout << "numhrbfs: " << numHRBFS << std::endl;
-    isoVals.resize(plen);
+    isoVals.resize(wlen);
     //sort out points and normals by weight
     for(int i = 0; i < wlen; i++)
     {
@@ -156,7 +156,9 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
     std::cout << "HRBFSPACE: " << hrbfSpace << std::endl;
     Eigen::Matrix4f origMat = invMat.inverse();
     std::cout << "ORIGMAT: " << origMat << std::endl;
-    Eigen::Vector3f pt(x,y,z);
+    worldSpace = hrbfSpace.transpose() * origMat;
+    std::cout << "WORLDSPACE: " << worldSpace << std::endl;
+    Eigen::Vector3f pt(hrbfSpace(0),hrbfSpace(1),hrbfSpace(2));
     Eigen::Vector3f ptGrad;
     Eigen::Vector3f oldGrad;
 
@@ -189,6 +191,17 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
 
         iso = eval(worldSpace(0),worldSpace(1),worldSpace(2), invMats, maxIdx);
         std::cout << "EVALOUT: " << iso << std::endl;
+
+        invMat <<   invMats[*maxIdx][0][0], invMats[*maxIdx][0][1], invMats[*maxIdx][0][2], invMats[*maxIdx][0][3],
+                    invMats[*maxIdx][1][0], invMats[*maxIdx][1][1], invMats[*maxIdx][1][2], invMats[*maxIdx][1][3],
+                    invMats[*maxIdx][2][0], invMats[*maxIdx][2][1], invMats[*maxIdx][2][2], invMats[*maxIdx][2][3],
+                    invMats[*maxIdx][3][0], invMats[*maxIdx][3][1], invMats[*maxIdx][3][2], invMats[*maxIdx][3][3];
+        std::cout << "INVMAT: " << invMat << std::endl;
+        //hrbfSpace = hrbfSpace.transpose() * invMat;
+        //std::cout << "HRBFSPACE: " << hrbfSpace << std::endl;
+        origMat = invMat.inverse();
+        std::cout << "ORIGMAT: " << origMat << std::endl;
+
         fflush(stdout);
         isoDiff = iso - isoVals[idx];
         std::cout << "ISODIFF: " << isoDiff << std::endl;
@@ -201,7 +214,7 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
         gAngle = gAngle/(2*PI) * 360;
         std::cout << "GANGLE: " << gAngle << std::endl;
     }
-    return std::vector<float> { pt(0), pt(1), pt(2) };
+    return std::vector<float> { worldSpace(0), worldSpace(1), worldSpace(2) };
 }
 
 void HRBFManager::setNeedRecalc(bool r)
