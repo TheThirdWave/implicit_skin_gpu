@@ -158,7 +158,8 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
     std::cout << "ORIGMAT: " << origMat << std::endl;
     worldSpace = hrbfSpace.transpose() * origMat;
     std::cout << "WORLDSPACE: " << worldSpace << std::endl;
-    Eigen::Vector3f pt(hrbfSpace(0),hrbfSpace(1),hrbfSpace(2));
+    Eigen::Vector3f pt;
+    Eigen::Vector4f pt4(hrbfSpace(0), hrbfSpace(1), hrbfSpace(2), 1.0f);
     Eigen::Vector3f ptGrad;
     Eigen::Vector3f oldGrad;
 
@@ -181,24 +182,27 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
     while(isoDiff > MINISODIFFERENCE && gAngle < DISCONTINUITYANGLE)
     {
         std::cout << "ISODIFF: " << isoDiff << std::endl;
+        pt << hrbfSpace(0), hrbfSpace(1), hrbfSpace(2);
         pt = pt + PROJECTIONNUM * (isoDiff) * (ptGrad/(ptGrad.norm()*ptGrad.norm()));
 
         //after adjusting the hrbfspace point, translate pt back to world space since that's what eval expects.
-        hrbfSpace << pt(0), pt(1), pt(2), 1.0f;
+        pt4 << pt(0), pt(1), pt(2), 1.0f;
         std::cout << "HRBFSPACE: " << hrbfSpace << std::endl;
-        worldSpace = hrbfSpace.transpose() * origMat;
+        worldSpace = pt4.transpose() * origMat;
         std::cout << "WORLDSPACE: " << worldSpace << std::endl;
+        hrbfSpace << worldSpace(0), worldSpace(1), worldSpace(2), 1.0f;
 
         iso = eval(worldSpace(0),worldSpace(1),worldSpace(2), invMats, maxIdx);
         std::cout << "EVALOUT: " << iso << std::endl;
 
+        //use the inverse matrix identified by the eval to get the hrbfspace coordinates of the point.
         invMat <<   invMats[*maxIdx][0][0], invMats[*maxIdx][0][1], invMats[*maxIdx][0][2], invMats[*maxIdx][0][3],
                     invMats[*maxIdx][1][0], invMats[*maxIdx][1][1], invMats[*maxIdx][1][2], invMats[*maxIdx][1][3],
                     invMats[*maxIdx][2][0], invMats[*maxIdx][2][1], invMats[*maxIdx][2][2], invMats[*maxIdx][2][3],
                     invMats[*maxIdx][3][0], invMats[*maxIdx][3][1], invMats[*maxIdx][3][2], invMats[*maxIdx][3][3];
         std::cout << "INVMAT: " << invMat << std::endl;
-        //hrbfSpace = hrbfSpace.transpose() * invMat;
-        //std::cout << "HRBFSPACE: " << hrbfSpace << std::endl;
+        hrbfSpace = hrbfSpace.transpose() * invMat;
+        std::cout << "HRBFSPACE: " << hrbfSpace << std::endl;
         origMat = invMat.inverse();
         std::cout << "ORIGMAT: " << origMat << std::endl;
 
