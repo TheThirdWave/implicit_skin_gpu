@@ -68,7 +68,7 @@ bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen,
     }
 
     int* emptyIdx = new int;
-    for(int i = 0; i < plen; i++)
+    for(int i = 0; i < wlen; i++)
     {
         std::cout << "get isoval: " << i << std::endl;
         isoVals[i] = eval(points[i*3], points[i*3+1], points[i*3+2], invMats, emptyIdx);
