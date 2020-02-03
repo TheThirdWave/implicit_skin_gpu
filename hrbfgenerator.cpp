@@ -195,6 +195,7 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
     {
         //find the distance of the point from the rigging bone.
         Eigen::Vector3f pt = Eigen::Vector3f(points[i], points[i+1], points[i+2]);
+        std::cout << "PT: " << pt << std::endl;
         //map the point onto the plane defined by the start of the joint and it's direction.
         Eigen::Vector3f toPt = pt - startJoint;
         Eigen::Vector3f ptPlane = pt - (toPt.dot(directionNorm) * directionNorm);
@@ -205,8 +206,16 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
         float a = (endJoint-startJoint).norm();
         float cullPlane = (toPt.transpose() * direction);
         cullPlane = cullPlane/(a * a);
+        std::cout << "cullPlane: " << cullPlane << std::endl;
         if(cullPlane <= CULLDISTANCE || cullPlane >= 1.0 - CULLDISTANCE)
         {
+            std::cout << "directionNorm: " << directionNorm << std::endl;
+            std::cout << "topt: " << toPt << std::endl;
+            std::cout << "ptPlane: " << ptPlane << std::endl;
+            std::cout << "dist: " << dist << std::endl;
+            std::cout << "largestR: " << largestR << std::endl;
+            std::cout << "smallestR: " << smallestR << std::endl;
+            std::cout << "a: " << a << std::endl;
             points.erase(points.begin()+i, points.begin()+i+3);
             plen -= 3;
             normals.erase(normals.begin()+i, normals.begin()+i+3);
@@ -224,6 +233,7 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
     fflush(stdout);
     //Add cap points to each end of the HRBF to allow for smooth deformation at the joints.
     Eigen::Vector3f capPoint = endJoint + (directionNorm * smallestR);
+    std::cout << "CPBack: " << capPoint << std::endl;
     points.push_back(capPoint(0));
     points.push_back(capPoint(1));
     points.push_back(capPoint(2));
@@ -233,13 +243,14 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
     normals.push_back(directionNorm(2));
     nlen += 3;
     capPoint = startJoint - (directionNorm * smallestR);
+    std::cout << "CPFront: " << capPoint << std::endl;
     points.push_back(capPoint(0));
     points.push_back(capPoint(1));
     points.push_back(capPoint(2));
     plen += 3;
-    normals.push_back(directionNorm(0));
-    normals.push_back(directionNorm(1));
-    normals.push_back(directionNorm(2));
+    normals.push_back(-directionNorm(0));
+    normals.push_back(-directionNorm(1));
+    normals.push_back(-directionNorm(2));
     nlen += 3;
 
 
