@@ -179,7 +179,7 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
     std::cout << "GANGLE: " << gAngle << std::endl;
     //we move the point closer to it's iso value using Newton iterations. Break when we're close enough or hit an angle discontinuity
     //(The angle discontinuity suggests we've hit another HRBF and so we should stop to prevent self-intersection)
-    while(isoDiff > MINISODIFFERENCE && gAngle < DISCONTINUITYANGLE)
+    while(std::abs(isoDiff) > MINISODIFFERENCE && gAngle < DISCONTINUITYANGLE)
     {
         std::cout << "ISODIFF: " << isoDiff << std::endl;
         pt << hrbfSpace(0), hrbfSpace(1), hrbfSpace(2);

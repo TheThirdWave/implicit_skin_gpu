@@ -187,6 +187,8 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
     for ( ; !iter.isDone(); iter.next()) {
         MPoint pt = iter.position();
         std::cout << "PTIDX: " << iter.index() << std::endl;
+        MObject item = iter.currentItem();
+        std::cout << "curItem: " << item.apiTypeStr() << std::endl;
         MPoint skinned;
         // get the weights for this point
         MArrayDataHandle weightsHandle = weightListHandle.inputValue().child( weights );

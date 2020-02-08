@@ -137,47 +137,6 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
         return;
     }
     std::cout << "START HRBF INIT"<< std::endl;
-    fflush(stdout);
-    int sidelen = plen/3;
-    std::cout << "sidelen: "<< sidelen << std::endl;
-    std::cout << "StartJoint: " << startJoint << std::endl;
-    std::cout << "EndJoint: " << endJoint << std::endl;
-    fflush(stdout);
-    std::cout << coefficients << std::endl;
-    if(coefficients != nullptr)
-    {
-        std::cout << "DELETING COEFFICIENTS"<< std::endl;
-        fflush(stdout);
-        delete coefficients;
-        coefficients = nullptr;
-    }
-    coefficients = new MatrixXf(sidelen*4, sidelen*4);
-    std::cout << "resize coeff"<< std::endl;
-    fflush(stdout);
-    if(unknowns != nullptr)
-    {
-        delete unknowns;
-        unknowns = nullptr;
-    }
-    unknowns = new VectorXf(sidelen*4);
-    std::cout << "resize unkown"<< std::endl;
-    fflush(stdout);
-    if(results != nullptr)
-    {
-        delete results;
-        results = nullptr;
-    }
-    results = new VectorXf(sidelen*4);
-    std::cout << "resize results"<< std::endl;
-    fflush(stdout);
-    if(mPoints != nullptr)
-    {
-        delete mPoints;
-        mPoints = nullptr;
-    }
-    mPoints = new VectorXf(sidelen*3);
-    std::cout << "resize mPoints"<< std::endl;
-    fflush(stdout);
     float largestR = 0;
     float smallestR = -1;
 
@@ -220,6 +179,7 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
             plen -= 3;
             normals.erase(normals.begin()+i, normals.begin()+i+3);
             nlen -= 3;
+            i -= 3;
         }
     }
 
@@ -252,6 +212,48 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
     normals.push_back(-directionNorm(1));
     normals.push_back(-directionNorm(2));
     nlen += 3;
+
+    fflush(stdout);
+    int sidelen = plen/3;
+    std::cout << "sidelen: "<< sidelen << std::endl;
+    std::cout << "StartJoint: " << startJoint << std::endl;
+    std::cout << "EndJoint: " << endJoint << std::endl;
+    fflush(stdout);
+    std::cout << coefficients << std::endl;
+    if(coefficients != nullptr)
+    {
+        std::cout << "DELETING COEFFICIENTS"<< std::endl;
+        fflush(stdout);
+        delete coefficients;
+        coefficients = nullptr;
+    }
+    coefficients = new MatrixXf(sidelen*4, sidelen*4);
+    std::cout << "resize coeff"<< std::endl;
+    fflush(stdout);
+    if(unknowns != nullptr)
+    {
+        delete unknowns;
+        unknowns = nullptr;
+    }
+    unknowns = new VectorXf(sidelen*4);
+    std::cout << "resize unkown"<< std::endl;
+    fflush(stdout);
+    if(results != nullptr)
+    {
+        delete results;
+        results = nullptr;
+    }
+    results = new VectorXf(sidelen*4);
+    std::cout << "resize results"<< std::endl;
+    fflush(stdout);
+    if(mPoints != nullptr)
+    {
+        delete mPoints;
+        mPoints = nullptr;
+    }
+    mPoints = new VectorXf(sidelen*3);
+    std::cout << "resize mPoints"<< std::endl;
+    fflush(stdout);
 
 
     std::cout << "build matrices" << std::endl;
