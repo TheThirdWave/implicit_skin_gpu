@@ -24,7 +24,7 @@ public:
     bool initHRBFS(float points[], int plen, float normals[], int nlen, std::vector<int> weights[], int wlen, float jointPos[], rawMat4x4 *invMats, int jlen);
     float eval(float x, float y, float z, rawMat4x4 *invMats, int *maxIdx);
     Eigen::Vector3f grad(float x, float y, float z, rawMat4x4 *invMats, int matIdx);
-    std::vector<float> adjustToHRBF(float x, float y, float z, rawMat4x4 *invMats, int idx);
+    std::vector<float> adjustToHRBF(float x, float y, float z, float nx, float ny, float nz, rawMat4x4 *invMats, int idx, std::vector<float> adjPts, int adjlen);
     void setNeedRecalc(bool r);
     bool getNeedRecalc();
     int getNumHRBFS();

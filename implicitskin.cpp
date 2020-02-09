@@ -182,6 +182,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
 
     // Iterate through each point in the geometry.
     //
+    MStatus status;
     cout << "START ITERATION!" << endl;
     fflush(stdout);
     for ( ; !iter.isDone(); iter.next()) {
@@ -189,6 +190,22 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         std::cout << "PTIDX: " << iter.index() << std::endl;
         MObject item = iter.currentItem();
         std::cout << "curItem: " << item.apiTypeStr() << std::endl;
+        MFnSingleIndexedComponent fnCom(item, &status);
+        int numComs;
+        fnCom.getCompleteData(numComs);
+        std::cout << "num components: " << numComs << std::endl;
+        MIntArray components;
+        fnCom.getElements(components);
+        std::cout << "Components: ";
+        for(int i = 0; i < components.length(); i++)
+        {
+            std::cout << components[i] << " ";
+        }
+        std::cout << std::endl;
+        std::vector<float> adjPts = getConnectedVerts(meshObject, components[0]);
+        MVector norm;
+        meshData.getVertexNormal(iter.index(), false, norm, MSpace::kObject);
+
         MPoint skinned;
         // get the weights for this point
         MArrayDataHandle weightsHandle = weightListHandle.inputValue().child( weights );
@@ -200,7 +217,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
             }
         }
         //adjust position using hrbfs to caculate self-intersections.
-        std::vector<float> adjustedPt = hrbfs->adjustToHRBF(skinned.x, skinned.y, skinned.z, inverseMatrices, iter.index());
+        std::vector<float> adjustedPt = hrbfs->adjustToHRBF(skinned.x, skinned.y, skinned.z, norm.x, norm.y, norm.z, inverseMatrices, iter.index(), adjPts, adjPts.size());
         MPoint adjPt(adjustedPt[0], adjustedPt[1], adjustedPt[2]);
         // Set the final position.
         iter.setPosition( adjPt );
@@ -241,4 +258,30 @@ void ImplicitSkin::initHRBFS()
 
         hrbfs = new HRBFManager();
     }
+}
+
+std::vector<float> ImplicitSkin::getConnectedVerts(MObject meshObj, int vertIdx)
+{
+    MStatus status;
+    MItMeshVertex vertIt(meshObj, &status);
+    if(status == MS::kFailure)
+    {
+        std::cout << "vertIt ERROR: " << status.errorString() << std::endl;
+    }
+    int oldIdx;
+    vertIt.setIndex(vertIdx, oldIdx);
+    MIntArray connectedIds;
+    vertIt.getConnectedVertices(connectedIds);
+    std::cout << "VERT NUM CONNECTED: " << connectedIds.length() << std::endl;
+    std::vector<float> points;
+    points.resize(connectedIds.length()*3);
+    for(int i = 0; i < connectedIds.length(); i++)
+    {
+        vertIt.setIndex(connectedIds[i], oldIdx);
+        MPoint curPt = vertIt.position();
+        points[i*3] = curPt.x;
+        points[i*3+1] = curPt.y;
+        points[i*3+2] = curPt.z;
+    }
+    return points;
 }

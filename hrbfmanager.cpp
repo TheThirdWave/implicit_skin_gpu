@@ -130,7 +130,7 @@ Eigen::Vector3f HRBFManager::grad(float x, float y, float z, rawMat4x4 *invMats,
     return grad;
 }
 
-std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x4 *invMats, int idx)
+std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, float nx, float ny, float nz, rawMat4x4 *invMats, int idx, std::vector<float> adjPts, int adjlen)
 {
     std::cout << "IN POINT: " << x << " " << y << " " << z << std::endl;
     fflush(stdout);
@@ -159,6 +159,7 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
     worldSpace = hrbfSpace.transpose() * origMat;
     std::cout << "WORLDSPACE: " << worldSpace << std::endl;
     Eigen::Vector3f pt;
+    Eigen::Vector3f oldPt;//this is in worldspace. because I suck.
     Eigen::Vector4f pt4(hrbfSpace(0), hrbfSpace(1), hrbfSpace(2), 1.0f);
     Eigen::Vector3f ptGrad;
     Eigen::Vector3f oldGrad;
@@ -183,13 +184,24 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, rawMat4x
     {
         std::cout << "ISODIFF: " << isoDiff << std::endl;
         pt << hrbfSpace(0), hrbfSpace(1), hrbfSpace(2);
+        //VERTEX PROJECTION STEP.
         pt = pt + PROJECTIONNUM * (isoDiff) * (ptGrad/(ptGrad.norm()*ptGrad.norm()));
 
         //after adjusting the hrbfspace point, translate pt back to world space since that's what eval expects.
         pt4 << pt(0), pt(1), pt(2), 1.0f;
         std::cout << "HRBFSPACE: " << hrbfSpace << std::endl;
+        oldPt << worldSpace(0), worldSpace(1), worldSpace(2);
         worldSpace = pt4.transpose() * origMat;
         std::cout << "WORLDSPACE: " << worldSpace << std::endl;
+
+        //RELAXATION STEP (TO FIX THE BULLSHIT THAT THE VERTEX PROJECTION STEP DOES)
+        float interp = std::max(0.0, (1 - std::pow(std::abs(isoDiff) - 1, 4)));
+        pt << worldSpace(0), worldSpace(1), worldSpace(2);
+        pt = (1-interp)*pt + interp*oldPt;
+
+        worldSpace << pt(0), pt(1), pt(2), 1.0;
+
+        std::cout << "RELAXED WORLDSPACE: " << worldSpace << std::endl;
         hrbfSpace << worldSpace(0), worldSpace(1), worldSpace(2), 1.0f;
 
         iso = eval(worldSpace(0),worldSpace(1),worldSpace(2), invMats, maxIdx);

@@ -4,6 +4,8 @@
 #include <maya/MDataBlock.h>
 #include <maya/MDataHandle.h>
 #include <maya/MStatus.h>
+#include <maya/MItMeshVertex.h>
+#include <maya/MFnSingleIndexedComponent.h>
 #include <maya/MArgList.h>
 #include <maya/MObject.h>
 #include <maya/MGlobal.h>
@@ -31,6 +33,7 @@
 #include <maya/MItGeometry.h>
 #include <maya/MPoint.h>
 #include <maya/MFnMatrixData.h>
+
 class ImplicitSkin : public MPxSkinCluster
 {
 public:
@@ -50,6 +53,8 @@ public:
 
 private:
   HRBFManager* hrbfs = NULL;
+
+  std::vector<float> getConnectedVerts(MObject meshObj, int vertIdx);
 };
 
 #endif // IMPLICITSKIN_H
