@@ -4,6 +4,7 @@
 #define MINISODIFFERENCE 0.001
 #define PI 3.1415926
 #define DISCONTINUITYANGLE 55
+#define MAXHRBFPOINTS 50
 
 HRBFManager::HRBFManager()
 {
@@ -57,6 +58,19 @@ bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen,
             norms[weights[i][j]].push_back(normals[i*3]);
             norms[weights[i][j]].push_back(normals[i*3+1]);
             norms[weights[i][j]].push_back(normals[i*3+2]);
+        }
+    }
+    //If there are more than 50 vertices in an HRBf, we randomly cull them until we get to 50.
+    for(int i =0; i < wlen; i++)
+    {
+        if(weights[i].size() > MAXHRBFPOINTS)
+        {
+            int numToCull = weights[i].size() - MAXHRBFPOINTS;
+            for(int j = 0; j < numToCull; j++)
+            {
+                int randPt = std::rand() % weights[i].size();
+                weights[i].erase(weights[i].begin() + randPt);
+            }
         }
     }
     for(int i = 0; i < numHRBFS; i++)
