@@ -36,8 +36,8 @@ void HRBFManager::clearHRBFS()
 
 bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen, std::vector<int> weights[], int wlen, float jointPos[], rawMat4x4 *invMats, int jlen)
 {
-    std::vector<float> pts[numHRBFS];
-    std::vector<float> norms[numHRBFS];
+    std::vector<float>* pts = new std::vector<float>[numHRBFS];
+    std::vector<float>* norms = new std::vector<float>[numHRBFS];
     std::cout << "plen: " << plen << std::endl;
     std::cout << "nlen: " << nlen << std::endl;
     std::cout << "wlen: " << wlen << std::endl;
@@ -73,12 +73,14 @@ bool HRBFManager::initHRBFS(float points[], int plen, float normals[], int nlen,
         std::cout << "get isoval: " << i << std::endl;
         isoVals[i] = eval(points[i*3], points[i*3+1], points[i*3+2], invMats, emptyIdx);
     }
+    delete [] pts;
+    delete [] norms;
     return true;
 }
 
 float HRBFManager::eval(float x, float y, float z, rawMat4x4* invMats, int* maxIdx)
 {
-    float fs[numHRBFS];
+    float* fs = new float[numHRBFS];
     float final = -1;
     //get input position values from each hrbf.
     for(int i = 0; i < numHRBFS; i++)
@@ -111,6 +113,7 @@ float HRBFManager::eval(float x, float y, float z, rawMat4x4* invMats, int* maxI
             //std::cout << *maxIdx << std::endl;
         }
     }
+    delete fs;
     return final;
 }
 
@@ -195,7 +198,7 @@ std::vector<float> HRBFManager::adjustToHRBF(float x, float y, float z, float nx
         std::cout << "WORLDSPACE: " << worldSpace << std::endl;
 
         //RELAXATION STEP (TO FIX THE BULLSHIT THAT THE VERTEX PROJECTION STEP DOES)
-        float interp = std::max(0.0, (1 - std::pow(std::abs(isoDiff) - 1, 4)));
+        float interp = std::max(0.0, (double)(1 - std::pow(std::abs(isoDiff) - 1, 4)));
         pt << worldSpace(0), worldSpace(1), worldSpace(2);
         pt = (1-interp)*pt + interp*oldPt;
 

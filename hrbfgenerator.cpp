@@ -48,8 +48,6 @@ HRBFGenerator::HRBFGenerator(std::vector<float> points, int plen, std::vector<fl
         Eigen::Vector3f ptPlane = pt - (toPt.dot(directionNorm) * directionNorm);
         //the length of the vector between the start joint and the mapped point is the radial distance from the bone.
         float dist = (ptPlane-endJoint).norm();
-        if(dist > largestR) largestR = dist;
-        if(dist < smallestR || smallestR == -1) smallestR = dist;
         float a = (endJoint-startJoint).norm();
         float cullPlane = (toPt.transpose() * direction);
         cullPlane = cullPlane/(a * a);
@@ -59,6 +57,10 @@ HRBFGenerator::HRBFGenerator(std::vector<float> points, int plen, std::vector<fl
             plen -= 3;
             normals.erase(normals.begin()+i, normals.begin()+i+3);
             nlen -= 3;
+        }
+        else {
+            if (dist > largestR) largestR = dist;
+            if (dist < smallestR || smallestR == -1) smallestR = dist;
         }
     }
     //update radius

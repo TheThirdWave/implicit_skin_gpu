@@ -1,7 +1,7 @@
 #ifndef HRBFMANAGER_H
 #define HRBFMANAGER_H
 
-#include <../eigen-eigen-323c052e1731/Eigen/Dense>
+#include <../eigen-3.3.7/Eigen/Dense>
 #include <vector>
 #include <iostream>
 

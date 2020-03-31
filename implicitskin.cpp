@@ -67,7 +67,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         transformsHandle.next();
     }
     MArrayDataHandle bindHandle = block.inputArrayValue( bindPreMatrix );
-    rawMat4x4 inverseMatrices[numTransforms];
+    rawMat4x4* inverseMatrices = new rawMat4x4[numTransforms];
     MMatrixArray invTransforms;
     if ( bindHandle.elementCount() > 0 ) {
         for ( int i=0; i<numTransforms; ++i ) {
@@ -224,6 +224,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         // advance the weight list handle
         weightListHandle.next();
     }
+    delete [] inverseMatrices;
     return returnStatus;
 }
 // standard initialization procedures
