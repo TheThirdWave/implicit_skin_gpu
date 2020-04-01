@@ -1,1 +1,27 @@
-﻿  implicitskin.vcxproj -> H:\School Stuff\capstone_project\implicit_skin_gpu\debug\implicitskin.mll
+﻿cl : command line warning D9002: ignoring unknown option '-std=c++0x'
+cl : command line warning D9002: ignoring unknown option '-std=c++0x'
+  hrbfgenerator.cpp
+cl : command line warning D9002: ignoring unknown option '-std=c++0x'
+  hrbfmanager.cpp
+H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(68,62): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(79,215): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(195,28): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(215,22): warning C4244: 'initializing': conversion from 'const _Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(247,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(150,163): warning C4100: 'adjlen': unreferenced formal parameter
+H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(150,99): warning C4100: 'nz': unreferenced formal parameter
+H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(150,89): warning C4100: 'ny': unreferenced formal parameter
+H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(150,79): warning C4100: 'nx': unreferenced formal parameter
+H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(253,38): warning C4100: 'r': unreferenced formal parameter
+H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfgenerator.cpp(330,100): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfgenerator.cpp(481,25): warning C4244: 'return': conversion from 'Eigen::EigenBase<Derived>::Index' to 'int', possible loss of data
+          with
+          [
+              Derived=Eigen::Matrix<float,-1,1,0,-1,1>
+          ]
+     Creating library debug\\implicitskin.lib and object debug\\implicitskin.exp
+  implicitskin.vcxproj -> H:\School Stuff\capstone_project\implicit_skin_gpu\debug\implicitskin.mll

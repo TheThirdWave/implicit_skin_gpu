@@ -57,6 +57,7 @@ HRBFGenerator::HRBFGenerator(std::vector<float> points, int plen, std::vector<fl
             plen -= 3;
             normals.erase(normals.begin()+i, normals.begin()+i+3);
             nlen -= 3;
+            i -= 3;
         }
         else
         {
