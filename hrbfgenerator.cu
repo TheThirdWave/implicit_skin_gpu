@@ -1,15 +1,16 @@
-#include "hrbfgenerator.h"
+#include "hrbfgenerator.cuh"
 
 #define VECTORLEN 3
 #define CULLDISTANCE 0.05
+#define BLOCKSIZE 256
 
 using namespace Eigen;
 
 HRBFGenerator::HRBFGenerator()
 {
     coefficients = new MatrixXf(0, 0);
-    std::cout << coefficients<< std::endl;
-    fflush(stdout);
+    //std::cout << coefficients<< std::endl;
+    //fflush(stdout);
     unknowns = new VectorXf(0);
     results = new VectorXf(0);
     mPoints = new VectorXf(0);
@@ -18,8 +19,8 @@ HRBFGenerator::HRBFGenerator()
 
 HRBFGenerator::HRBFGenerator(std::vector<float> points, int plen, std::vector<float> normals, int nlen, Vector3f startJoint, Vector3f endJoint)
 {
-    std::cout << "START HRBF CONSTRUCTOR"<< std::endl;
-    fflush(stdout);
+    //std::cout << "START HRBF CONSTRUCTOR"<< std::endl;
+    //fflush(stdout);
     if(plen/3 != nlen/3)
     {
         std::cout << "HRBFGEN ERROR: input arrays of different length!" << std::endl;
@@ -140,25 +141,25 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
         std::cout << "HRBFGEN ERROR: input arrays of different length!" << std::endl;
         return;
     }
-    std::cout << "START HRBF INIT"<< std::endl;
+    //std::cout << "START HRBF INIT"<< std::endl;
     float largestR = 0;
     float smallestR = -1;
 
 
-    std::cout << "get direction vector of joint."  << std::endl;
+    //std::cout << "get direction vector of joint."  << std::endl;
     fflush(stdout);
     //get the direction vector of the joint.
     Eigen::Vector3f direction = (endJoint-startJoint);
     Eigen::Vector3f directionNorm = direction / direction.norm();
 
-    std::cout << "find largest distance and cull points that are too close for reasons." << std::endl;
-    fflush(stdout);
+    //std::cout << "find largest distance and cull points that are too close for reasons." << std::endl;
+    //fflush(stdout);
     //find largest distance and cull points that are too close for reasons.
     for(int i = 0; i < plen; i = i + 3)
     {
         //find the distance of the point from the rigging bone.
         Eigen::Vector3f pt = Eigen::Vector3f(points[i], points[i+1], points[i+2]);
-        std::cout << "PT: " << pt << std::endl;
+        //std::cout << "PT: " << pt << std::endl;
         //map the point onto the plane defined by the start of the joint and it's direction.
         Eigen::Vector3f toPt = pt - startJoint;
         Eigen::Vector3f ptPlane = pt - (toPt.dot(directionNorm) * directionNorm);
@@ -167,16 +168,16 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
         float a = (endJoint-startJoint).norm();
         float cullPlane = (toPt.transpose() * direction);
         cullPlane = cullPlane/(a * a);
-        std::cout << "cullPlane: " << cullPlane << std::endl;
+        //std::cout << "cullPlane: " << cullPlane << std::endl;
         if(cullPlane <= CULLDISTANCE || cullPlane >= 1.0 - CULLDISTANCE)
         {
-            std::cout << "directionNorm: " << directionNorm << std::endl;
-            std::cout << "topt: " << toPt << std::endl;
-            std::cout << "ptPlane: " << ptPlane << std::endl;
-            std::cout << "dist: " << dist << std::endl;
-            std::cout << "largestR: " << largestR << std::endl;
-            std::cout << "smallestR: " << smallestR << std::endl;
-            std::cout << "a: " << a << std::endl;
+            //std::cout << "directionNorm: " << directionNorm << std::endl;
+            //std::cout << "topt: " << toPt << std::endl;
+            //std::cout << "ptPlane: " << ptPlane << std::endl;
+            //std::cout << "dist: " << dist << std::endl;
+            //std::cout << "largestR: " << largestR << std::endl;
+            //std::cout << "smallestR: " << smallestR << std::endl;
+            //std::cout << "a: " << a << std::endl;
             points.erase(points.begin()+i, points.begin()+i+3);
             plen -= 3;
             normals.erase(normals.begin()+i, normals.begin()+i+3);
@@ -190,17 +191,17 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
         }
     }
 
-    std::cout << "update radius" << std::endl;
-    fflush(stdout);
+    //std::cout << "update radius" << std::endl;
+    //fflush(stdout);
     //update radius
     radius = largestR;
-    std::cout << "RADIUS: " << radius << std::endl;
+    //std::cout << "RADIUS: " << radius << std::endl;
 
-    std::cout << "add cap points" << std::endl;
-    fflush(stdout);
+    //std::cout << "add cap points" << std::endl;
+    //fflush(stdout);
     //Add cap points to each end of the HRBF to allow for smooth deformation at the joints.
     Eigen::Vector3f capPoint = endJoint + (directionNorm * smallestR);
-    std::cout << "CPBack: " << capPoint << std::endl;
+    //std::cout << "CPBack: " << capPoint << std::endl;
     points.push_back(capPoint(0));
     points.push_back(capPoint(1));
     points.push_back(capPoint(2));
@@ -210,7 +211,7 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
     normals.push_back(directionNorm(2));
     nlen += 3;
     capPoint = startJoint - (directionNorm * smallestR);
-    std::cout << "CPFront: " << capPoint << std::endl;
+    //std::cout << "CPFront: " << capPoint << std::endl;
     points.push_back(capPoint(0));
     points.push_back(capPoint(1));
     points.push_back(capPoint(2));
@@ -220,51 +221,51 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
     normals.push_back(-directionNorm(2));
     nlen += 3;
 
-    fflush(stdout);
+    //fflush(stdout);
     int sidelen = plen/3;
-    std::cout << "sidelen: "<< sidelen << std::endl;
-    std::cout << "StartJoint: " << startJoint << std::endl;
-    std::cout << "EndJoint: " << endJoint << std::endl;
-    fflush(stdout);
-    std::cout << coefficients << std::endl;
+    //std::cout << "sidelen: "<< sidelen << std::endl;
+    //std::cout << "StartJoint: " << startJoint << std::endl;
+    //std::cout << "EndJoint: " << endJoint << std::endl;
+    //fflush(stdout);
+    //std::cout << coefficients << std::endl;
     if(coefficients != nullptr)
     {
-        std::cout << "DELETING COEFFICIENTS"<< std::endl;
-        fflush(stdout);
+        //std::cout << "DELETING COEFFICIENTS"<< std::endl;
+        //fflush(stdout);
         delete coefficients;
         coefficients = nullptr;
     }
     coefficients = new MatrixXf(sidelen*4, sidelen*4);
-    std::cout << "resize coeff"<< std::endl;
-    fflush(stdout);
+    //std::cout << "resize coeff"<< std::endl;
+    //fflush(stdout);
     if(unknowns != nullptr)
     {
         delete unknowns;
         unknowns = nullptr;
     }
     unknowns = new VectorXf(sidelen*4);
-    std::cout << "resize unkown"<< std::endl;
-    fflush(stdout);
+    //std::cout << "resize unkown"<< std::endl;
+    //fflush(stdout);
     if(results != nullptr)
     {
         delete results;
         results = nullptr;
     }
     results = new VectorXf(sidelen*4);
-    std::cout << "resize results"<< std::endl;
-    fflush(stdout);
+    //std::cout << "resize results"<< std::endl;
+    //fflush(stdout);
     if(mPoints != nullptr)
     {
         delete mPoints;
         mPoints = nullptr;
     }
     mPoints = new VectorXf(sidelen*3);
-    std::cout << "resize mPoints"<< std::endl;
-    fflush(stdout);
+    //std::cout << "resize mPoints"<< std::endl;
+    //fflush(stdout);
 
 
-    std::cout << "build matrices" << std::endl;
-    fflush(stdout);
+    //std::cout << "build matrices" << std::endl;
+    //fflush(stdout);
     //BUILD ALL THE BIG MATRICES YOU NEED TO SOLVE FOR THE STUFF.
     for(int i = 0; i < 4*sidelen; i += 4)
     {
@@ -302,29 +303,98 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
     return;
 }
 
+__global__ void getPointEvals(int N, float px, float py, float pz, float* unknowns, float* mPoints, float* outs)
+{
+    int index = threadIdx.x;
+    int stride = blockDim.x;
+
+
+    Vector3FDev p = Vector3FDev(px, py, pz);
+    //printf("px: %f, py: %f, pz: %f\n", px, py, pz);
+    //printf("p_dev: %f, %f, %f\n", p.x, p.y, p.z);
+    Vector3FDev vk;
+    Vector3FDev beta;
+    Vector3FDev diff;
+    Vector3FDev grad;
+
+    for (int i = index; i < N; i = i + stride)
+    {
+        if (i >= N) break;
+        int mpidx = i * 3;
+        int cidx = i * 4;
+        //printf("i: %d\n", i);
+        //printf("mPoints dev: %f %f %f\n", mPoints[mpidx], mPoints[mpidx + 1], mPoints[mpidx + 2]);
+        vk = Vector3FDev(mPoints[mpidx], mPoints[mpidx + 1], mPoints[mpidx + 2]);
+        //printf("vk_dev: %f, %f ,%f\n", vk.x, vk.y, vk.z);
+        
+        float alpha = unknowns[cidx];
+        //printf("alpha_dev: %f\n", alpha);
+        beta = Vector3FDev(unknowns[cidx + 1], unknowns[cidx + 2], unknowns[cidx + 3]);
+        //printf("beta_dev: %f, %f ,%f\n", beta.x, beta.y, beta.z);
+        diff = p - vk;//Vector3FDev(p.x - vk.x, p.y - vk.y, p.z - vk.z);
+        //printf("diff_dev: %f, %f ,%f\n", diff.x, diff.y, diff.z);
+        grad = Vector3FDev(HRBFGenerator::derivx_dev(diff.x, diff.y, diff.z), HRBFGenerator::derivy_dev(diff.x, diff.y, diff.z), HRBFGenerator::derivz_dev(diff.x, diff.y, diff.z));
+        //printf("grad_dev: %f, %f ,%f\n", grad.x, grad.y, grad.z);
+        //std::cout << alpha << std::endl;
+        //std::cout << beta(0) << "," << beta(1) << "," << beta(2) << " " << diff(0) << "," << diff(1) << "," << diff(2) << " " << grad(0) << "," << grad(1) << "," << grad(2) << std::endl;
+        outs[i] = alpha * HRBFGenerator::smoothfunc_dev(diff.x, diff.y, diff.z) - beta.dot(grad);
+    
+    }
+    
+}
+
 float HRBFGenerator::eval(float x, float y, float z)
 {
     //std::cout << "STARTING EVAL!!" << std::endl;
     //std::cout << "size = " << mPoints->size() << std::endl;
-    fflush(stdout);
+    //fflush(stdout);
     Vector3f p(x, y, z);
     float out = 0;
-    for(int i = 0; i < mPoints->size()/3; i++)
+    float out1 = 0;
+    float* mPoints_dev;
+    float* unknowns_dev;
+    float* outs;
+    cudaMallocManaged((void**)&mPoints_dev, mPoints->size() * sizeof(float));
+    cudaMallocManaged((void**)&unknowns_dev, unknowns->size() * sizeof(float));
+    cudaMallocManaged((void**)&outs, mPoints->size() / 3 * sizeof(float));
+    memcpy(mPoints_dev, mPoints->data(), mPoints->size() * sizeof(float));
+    memcpy(unknowns_dev, unknowns->data(), unknowns->size() * sizeof(float));
+    memset(outs, 0, mPoints->size() / 3 * sizeof(float));
+
+    //std::cout << "x: " << x << " y: " << y << " z: " << z << std::endl;
+    //std::cout << "p: " << p(0) << " " << p(1) << " " << p(2) << std::endl;
+
+
+    getPointEvals<<<1, mPoints->size() / 3>>>(mPoints->size() / 3, x, y, z, unknowns_dev, mPoints_dev, outs);
+    cudaDeviceSynchronize();
+    
+    for (int i = 0; i < mPoints->size() / 3; i++)
+    {
+        out += outs[i];
+    }
+
+
+    /*for(int i = 0; i < mPoints->size()/3; i++)
     {
         int mpidx = i * 3;
         int cidx = i * 4;
         Vector3f vk((*mPoints)(mpidx), (*mPoints)(mpidx+1), (*mPoints)(mpidx+2));
+        std::cout << "mpidx: " << mpidx << std::endl;
+        std::cout << "mPoints: " << (*mPoints)(mpidx) << " " << (*mPoints)(mpidx + 1) << " " << (*mPoints)(mpidx + 2) << std::endl;
         float alpha = (*unknowns)(cidx);
         Vector3f beta((*unknowns)(cidx+1), (*unknowns)(cidx+2), (*unknowns)(cidx+3));
-        Vector3f diff = p - vk;
+        Vector3f diff(p(0) - vk(0), p(1) - vk(1), p(2) - vk(2));// = p - vk;
         Vector3f grad(derivx(diff(0), diff(1), diff(2)), derivy(diff(0), diff(1), diff(2)), derivz(diff(0), diff(1), diff(2)));
-        //std::cout << alpha << std::endl;
-        //std::cout << beta(0) << "," << beta(1) << "," << beta(2) << " " << diff(0) << "," << diff(1) << "," << diff(2) << " " << grad(0) << "," << grad(1) << "," << grad(2) << std::endl;
+        std::cout << alpha << std::endl;
+        std::cout << "beta: " << beta(0) << "," << beta(1) << "," << beta(2) << " " << "diff: " << diff(0) << "," << diff(1) << "," << diff(2) << " " << "grad: " << grad(0) << "," << grad(1) << "," << grad(2) << std::endl;
         out += alpha*smoothfunc(diff(0), diff(1), diff(2)) - beta.dot(grad);
-        //std::cout << out << std::endl;
+        std::cout << "out: " << out << std::endl;
+    }*/
 
-    }
-    std::cout << out << std::endl;
+    //std::cout << "out: " << out << " out1: " << out1 << std::endl;
+    cudaFree(mPoints_dev);
+    cudaFree(unknowns_dev);
+    cudaFree(outs);
     if(out < -radius) return 1;
     if(out > radius) return 0;
     return (-3.0/16.0)*pow(out/radius, 5) + (5.0/8.0)*pow(out/radius, 3) -(15.0/16.0)*(out/radius) + 0.5;
@@ -334,23 +404,23 @@ Vector3f HRBFGenerator::grad(float x, float y, float z)
 {
     //std::cout << "STARTING GRAD EVAL!!" << std::endl;
     //std::cout << "size = " << mPoints->size() << std::endl;
-    fflush(stdout);
+    //fflush(stdout);
     if(mPoints->size() <= 0) return Vector3f(0,0,0);
     Vector3f p(x, y, z);
-    std::cout << p << std::endl;
-    fflush(stdout);
+    //std::cout << p << std::endl;
+    //fflush(stdout);
     Vector3f out(0, 0, 0);
     //std::cout << out << std::endl;
-    fflush(stdout);
+    //fflush(stdout);
     for(int i = 0; i < mPoints->size()/3; i++)
     {
         int mpidx = i * 3;
         int cidx = i * 4;
         //std::cout << "idxs: " << mpidx << " " << cidx << std::endl;
-        fflush(stdout);
+        //fflush(stdout);
         Vector3f vk((*mPoints)(mpidx), (*mPoints)(mpidx+1), (*mPoints)(mpidx+2));
         //std::cout << vk << std::endl;
-        fflush(stdout);
+        //fflush(stdout);
         float alpha = (*unknowns)(cidx);
         //std::cout << alpha << std::endl;
         Vector3f beta((*unknowns)(cidx+1), (*unknowns)(cidx+2), (*unknowns)(cidx+3));
@@ -369,7 +439,7 @@ Vector3f HRBFGenerator::grad(float x, float y, float z)
         //std::cout << out << std::endl;
 
     }
-    std::cout << "GRAD OUT: " << out << std::endl;
+    //std::cout << "GRAD OUT: " << out << std::endl;
 
     return out;
 }
@@ -378,8 +448,9 @@ void HRBFGenerator::solve()
 {
     if(coefficients->cols() > 0)
     {
-        std::cout << "coefficient cols: " << coefficients->cols() << std::endl;
-        *unknowns = coefficients->colPivHouseholderQr().solve(*results);
+
+       // std::cout << "coefficient cols: " << coefficients->cols() << std::endl;
+        *unknowns = SerialFunctions::eigenColPivHouseHolderSolve(coefficients, results);
     }
     else
     {
@@ -392,9 +463,19 @@ float HRBFGenerator::smoothfunc(float x, float y, float z)
     return pow(sqrt(x*x+y*y+z*z),3);
 }
 
+__device__ float HRBFGenerator::smoothfunc_dev(float x, float y, float z)
+{
+    return powf(sqrtf(x * x + y * y + z * z), 3);
+}
+
 float HRBFGenerator::derivx(float x, float y, float z)
 {
     return 3*x*sqrt(x*x+y*y+z*z);
+}
+
+__device__ float HRBFGenerator::derivx_dev(float x, float y, float z)
+{
+    return 3 * x * sqrtf(x * x + y * y + z * z);
 }
 
 float HRBFGenerator::derivy(float x, float y, float z)
@@ -402,9 +483,19 @@ float HRBFGenerator::derivy(float x, float y, float z)
     return 3*y*sqrt(x*x+y*y+z*z);
 }
 
+__device__ float HRBFGenerator::derivy_dev(float x, float y, float z)
+{
+    return 3 * y * sqrtf(x * x + y * y + z * z);
+}
+
 float HRBFGenerator::derivz(float x, float y, float z)
 {
     return 3*z*sqrt(x*x+y*y+z*z);
+}
+
+__device__ float HRBFGenerator::derivz_dev(float x, float y, float z)
+{
+    return 3 * z * sqrtf(x * x + y * y + z * z);
 }
 
 float HRBFGenerator::h00(float x, float y, float z)

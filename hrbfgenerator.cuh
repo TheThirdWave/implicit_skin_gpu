@@ -3,7 +3,12 @@
 
 #include <../eigen-3.3.7/Eigen/Dense>
 #include <vector>
+#include <cuda.h>
+#include <cuda_runtime_api.h>
+#include <device_launch_parameters.h>
 #include <iostream>
+#include "SerialFunctions.h"
+#include "Vector3fDev.cuh"
 
 using Eigen::MatrixXf;
 using Eigen::VectorXf;
@@ -23,12 +28,18 @@ private:
     VectorXf* mPoints;
     float radius;
 
-
     bool recalc;
+
+    friend __global__ void getPointEvals(int N, float px, float py, float pz, float* unknowns, float* mPoints, float* outs);
+
     float smoothfunc(float x, float y, float z);
+    static __device__ float smoothfunc_dev(float x, float y, float z);
     float derivx(float x, float y, float z);
+    static __device__ float derivx_dev(float x, float y, float z);
     float derivy(float x, float y, float z);
+    static __device__ float derivy_dev(float x, float y, float z);
     float derivz(float x, float y, float z);
+    static __device__ float derivz_dev(float x, float y, float z);
     float h00(float x, float y, float z);
     float h01(float x, float y, float z);
     float h02(float x, float y, float z);

@@ -74,7 +74,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
             transforms[i] = MFnMatrixData( bindHandle.inputValue().data() ).matrix() * transforms[i];
             invTransforms.append(MFnMatrixData( bindHandle.inputValue().data() ).matrix());
             transforms[i].inverse().get(inverseMatrices[i]);
-            std::cout << "INVMAT" << i << ": " << std::endl;
+            //std::cout << "INVMAT" << i << ": " << std::endl;
             for(int j = 0; j < 4; j++)
             {
                 for(int k = 0; k < 4; k++)
@@ -106,14 +106,14 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
     if(hrbfs->getNeedRecalc())
     {
         cout << "START RECALC!" << endl;
-        fflush(stdout);
+        //fflush(stdout);
 
         //create new HRBFgenerator objects if none exist
         if(hrbfs->getNumHRBFS() == 0)
         {
-            cout << "Creating HRBFS!" << endl;
+            //cout << "Creating HRBFS!" << endl;
             hrbfs->createHRBFS(numTransforms - 1);
-            fflush(stdout);
+            //fflush(stdout);
         }
 
         int nPoints = iter.exactCount();
@@ -142,7 +142,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
             MArrayDataHandle weightsHandle = weightListHandle.inputValue().child( weights );
             // compute the skinning
             double weight = -1;
-            std::cout << idx << " " << weightsHandle.elementCount() << ": ";
+            //std::cout << idx << " " << weightsHandle.elementCount() << ": ";
             for ( int i=0; i<numTransforms; ++i ) {
                 if ( MS::kSuccess == weightsHandle.jumpToElement( i ) ) {
 
@@ -153,12 +153,8 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
                         weight = holdWeight;
                         indicies[idx].push_back(i);
                     }
-                    std::cout << i << ": " << weightsHandle.inputValue().asDouble() << " ";
+                    //std::cout << i << ": " << weightsHandle.inputValue().asDouble() << " ";
                 }
-            }
-            for(int i = 0; i <indicies[idx].size(); i++)
-            {
-                std::cout << indicies[idx][i] << std::endl;
             }
             weightListHandle.next();
             count++;
@@ -169,12 +165,12 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         for(int i = 0; i < numTransforms; i++)
         {
             MVector p = MTransformationMatrix(invTransforms[i].inverse()).getTranslation(MSpace::kWorld);
-            std::cout << "pT: " << p << std::endl;
+            //std::cout << "pT: " << p << std::endl;
             transformPos[i * 3] = p.x;
             transformPos[i * 3 + 1] = p.y;
             transformPos[i * 3 + 2] = p.z;
         }
-        std::cout << "INIT HRBFS!" << std::endl;
+        //std::cout << "INIT HRBFS!" << std::endl;
         hrbfs->initHRBFS(pts, nPoints * 3, norms, nPoints * 3, indicies, nPoints, transformPos, inverseMatrices, numTransforms);
 
 
@@ -183,25 +179,21 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
     // Iterate through each point in the geometry.
     //
     MStatus status;
-    cout << "START ITERATION!" << endl;
-    fflush(stdout);
+    //cout << "START ITERATION!" << endl;
+    //fflush(stdout);
     for ( ; !iter.isDone(); iter.next()) {
         MPoint pt = iter.position();
-        std::cout << "PTIDX: " << iter.index() << std::endl;
+        //std::cout << "PTIDX: " << iter.index() << std::endl;
         MObject item = iter.currentItem();
-        std::cout << "curItem: " << item.apiTypeStr() << std::endl;
+        //std::cout << "curItem: " << item.apiTypeStr() << std::endl;
         MFnSingleIndexedComponent fnCom(item, &status);
         int numComs;
         fnCom.getCompleteData(numComs);
-        std::cout << "num components: " << numComs << std::endl;
+        //std::cout << "num components: " << numComs << std::endl;
         MIntArray components;
         fnCom.getElements(components);
-        std::cout << "Components: ";
-        for(int i = 0; i < components.length(); i++)
-        {
-            std::cout << components[i] << " ";
-        }
-        std::cout << std::endl;
+        //std::cout << "Components: ";
+        //std::cout << std::endl;
         std::vector<float> adjPts = getConnectedVerts(meshObject, components[0]);
         MVector norm;
         meshData.getVertexNormal(iter.index(), false, norm, MSpace::kObject);
@@ -213,7 +205,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         for ( int i=0; i<numTransforms; ++i ) {
             if ( MS::kSuccess == weightsHandle.jumpToElement( i ) ) {
                 skinned += ( pt * transforms[i] ) * weightsHandle.inputValue().asDouble();
-                std::cout << "tidx: " << i << std::endl;
+                //std::cout << "tidx: " << i << std::endl;
             }
         }
         //adjust position using hrbfs to caculate self-intersections.
@@ -253,10 +245,9 @@ MStatus uninitializePlugin( MObject obj )
 
 void ImplicitSkin::initHRBFS()
 {
-    std::cout << "making HRBFManager" << std::endl;
-    std::cout << hrbfs << std::endl;
     if(hrbfs == NULL){
-
+        std::cout << "making HRBFManager" << std::endl;
+        std::cout << hrbfs << std::endl;
         hrbfs = new HRBFManager();
     }
 }
@@ -273,7 +264,7 @@ std::vector<float> ImplicitSkin::getConnectedVerts(MObject meshObj, int vertIdx)
     vertIt.setIndex(vertIdx, oldIdx);
     MIntArray connectedIds;
     vertIt.getConnectedVertices(connectedIds);
-    std::cout << "VERT NUM CONNECTED: " << connectedIds.length() << std::endl;
+    //std::cout << "VERT NUM CONNECTED: " << connectedIds.length() << std::endl;
     std::vector<float> points;
     points.resize(connectedIds.length()*3);
     for(int i = 0; i < connectedIds.length(); i++)

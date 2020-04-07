@@ -1,6 +1,20 @@
 #ifndef IMPLICITSKIN_H
 #define IMPLICITSKIN_H
 
+//Have to include CUDA before Maya, and redefine some types because they both use the same names for certain things.
+#include <cuda_runtime_api.h>
+#define short2 CUDA_short2
+#define short3 CUDA_short3
+#define long2 CUDA_long2
+#define long3 CUDA_long3
+#define int2 CUDA_int2
+#define int3 CUDA_int3
+#define float2 CUDA_float2
+#define float3 CUDA_float3
+#define double2 CUDA_double2
+#define double3 CUDA_double3
+#define double4 CUDA_double4
+
 #include <maya/MDataBlock.h>
 #include <maya/MDataHandle.h>
 #include <maya/MStatus.h>
@@ -22,7 +36,7 @@
 
 #include <maya/MPxDeformerNode.h>
 
-#include "hrbfgenerator.h"
+#include "hrbfgenerator.cuh"
 #include "hrbfmanager.h"
 
 #include <maya/MFnPlugin.h>
