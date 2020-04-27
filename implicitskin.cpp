@@ -102,6 +102,7 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         hrbfs->setNeedRecalc(true);
     }
 
+    int nPoints = iter.exactCount();
     initHRBFS();
     if(hrbfs->getNeedRecalc())
     {
@@ -111,12 +112,11 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         //create new HRBFgenerator objects if none exist
         if(hrbfs->getNumHRBFS() == 0)
         {
-            //cout << "Creating HRBFS!" << endl;
+            cout << "Creating HRBFS!" << endl;
             hrbfs->createHRBFS(numTransforms - 1);
             //fflush(stdout);
         }
 
-        int nPoints = iter.exactCount();
         float* pts = new float[nPoints * 3];
         float* norms = new float[nPoints * 3];
         std::vector<int>* indicies = new std::vector<int>[nPoints];
@@ -170,16 +170,24 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
             transformPos[i * 3 + 1] = p.y;
             transformPos[i * 3 + 2] = p.z;
         }
-        //std::cout << "INIT HRBFS!" << std::endl;
+        std::cout << "INIT HRBFS!" << std::endl;
         hrbfs->initHRBFS(pts, nPoints * 3, norms, nPoints * 3, indicies, nPoints, transformPos, inverseMatrices, numTransforms);
 
 
     }
 
+    std::vector<float> points;
+    std::vector<float> normals;
+    std::vector<int> indicies;
+    points.resize(nPoints * 3);
+    normals.resize(nPoints * 3);
+    indicies.resize(nPoints);
+
     // Iterate through each point in the geometry.
     //
     MStatus status;
-    //cout << "START ITERATION!" << endl;
+    int count = 0;
+    cout << "START ITERATION!" << endl;
     //fflush(stdout);
     for ( ; !iter.isDone(); iter.next()) {
         MPoint pt = iter.position();
@@ -194,7 +202,6 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
         fnCom.getElements(components);
         //std::cout << "Components: ";
         //std::cout << std::endl;
-        std::vector<float> adjPts = getConnectedVerts(meshObject, components[0]);
         MVector norm;
         meshData.getVertexNormal(iter.index(), false, norm, MSpace::kObject);
 
@@ -208,14 +215,38 @@ MStatus ImplicitSkin::deform( MDataBlock& block,
                 //std::cout << "tidx: " << i << std::endl;
             }
         }
-        //adjust position using hrbfs to caculate self-intersections.
-        std::vector<float> adjustedPt = hrbfs->adjustToHRBF(skinned.x, skinned.y, skinned.z, norm.x, norm.y, norm.z, inverseMatrices, iter.index(), adjPts, adjPts.size());
-        MPoint adjPt(adjustedPt[0], adjustedPt[1], adjustedPt[2]);
-        // Set the final position.
-        iter.setPosition( adjPt );
-        // advance the weight list handle
+        int pIdx = count * 3;
+        //std::cout << "saving point" << std::endl;
+        points[pIdx] = skinned.x;
+        points[pIdx + 1] = skinned.y;
+        points[pIdx + 2] = skinned.z;
+        //std::cout << "saving normal" << std::endl;
+        normals[pIdx] = norm.x;
+        normals[pIdx + 1] = norm.y;
+        normals[pIdx + 2] = norm.z;
+        //std::cout << "saving index" << std::endl;
+        indicies[count] = iter.index();
+
         weightListHandle.next();
+        count++;
     }
+    //std::cout << "iter reset" << std::endl;
+    iter.reset();
+    count = 0;
+    float* adjPts;
+    cudaMallocManaged((void**)&adjPts, (nPoints * 3) * sizeof(float));
+    std::cout << "ADJUST ALL POINTS" << std::endl;
+    hrbfs->adjustAllPoints(&points, &normals, inverseMatrices, &indicies, adjPts, nPoints * 3);
+    for (; !iter.isDone(); iter.next())
+    {
+        int pIdx = count * 3;
+        MPoint adjPt(adjPts[pIdx], adjPts[pIdx + 1], adjPts[pIdx + 2]);
+        //std::cout << "OUT POINT " << pIdx << ": " << adjPts[pIdx] << " " << adjPts[pIdx + 1] << " " << adjPts[pIdx + 2] << std::endl;
+        //std::cout << "ADJPOINT: " << adjPt << std::endl;
+        iter.setPosition(adjPt);
+        count++;
+    }
+    cudaFree(adjPts);
     delete [] inverseMatrices;
     return returnStatus;
 }

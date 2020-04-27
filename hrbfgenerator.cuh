@@ -3,9 +3,9 @@
 
 #include <../eigen-3.3.7/Eigen/Dense>
 #include <vector>
-#include <cuda.h>
-#include <cuda_runtime_api.h>
-#include <device_launch_parameters.h>
+//#include <cuda.h>
+//#include <cuda_runtime_api.h>
+//#include <device_launch_parameters.h>
 #include <iostream>
 #include "SerialFunctions.h"
 #include "Vector3fDev.cuh"
@@ -65,7 +65,10 @@ public:
     MatrixXf* getCoefficients();
     VectorXf* getUnknowns();
     VectorXf* getResults();
+    VectorXf* getMPoints();
+    float getRadius();
     int getNumMPoints();
+    int getNumUnknowns();
     bool getNeedRecalc();
 
     void setRecalc(bool r);

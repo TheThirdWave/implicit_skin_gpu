@@ -223,7 +223,7 @@ void HRBFGenerator::init(std::vector<float> points, int plen, std::vector<float>
 
     //fflush(stdout);
     int sidelen = plen/3;
-    //std::cout << "sidelen: "<< sidelen << std::endl;
+    std::cout << "sidelen: "<< sidelen << std::endl;
     //std::cout << "StartJoint: " << startJoint << std::endl;
     //std::cout << "EndJoint: " << endJoint << std::endl;
     //fflush(stdout);
@@ -350,7 +350,7 @@ float HRBFGenerator::eval(float x, float y, float z)
     //fflush(stdout);
     Vector3f p(x, y, z);
     float out = 0;
-    float out1 = 0;
+    /*float out1 = 0;
     float* mPoints_dev;
     float* unknowns_dev;
     float* outs;
@@ -366,35 +366,30 @@ float HRBFGenerator::eval(float x, float y, float z)
 
 
     getPointEvals<<<1, mPoints->size() / 3>>>(mPoints->size() / 3, x, y, z, unknowns_dev, mPoints_dev, outs);
-    cudaDeviceSynchronize();
-    
-    for (int i = 0; i < mPoints->size() / 3; i++)
-    {
-        out += outs[i];
-    }
+    cudaDeviceSynchronize();*/
 
 
-    /*for(int i = 0; i < mPoints->size()/3; i++)
+    for(int i = 0; i < mPoints->size()/3; i++)
     {
         int mpidx = i * 3;
         int cidx = i * 4;
         Vector3f vk((*mPoints)(mpidx), (*mPoints)(mpidx+1), (*mPoints)(mpidx+2));
-        std::cout << "mpidx: " << mpidx << std::endl;
-        std::cout << "mPoints: " << (*mPoints)(mpidx) << " " << (*mPoints)(mpidx + 1) << " " << (*mPoints)(mpidx + 2) << std::endl;
+        //std::cout << "mpidx: " << mpidx << std::endl;
+        //std::cout << "mPoints: " << (*mPoints)(mpidx) << " " << (*mPoints)(mpidx + 1) << " " << (*mPoints)(mpidx + 2) << std::endl;
         float alpha = (*unknowns)(cidx);
         Vector3f beta((*unknowns)(cidx+1), (*unknowns)(cidx+2), (*unknowns)(cidx+3));
         Vector3f diff(p(0) - vk(0), p(1) - vk(1), p(2) - vk(2));// = p - vk;
         Vector3f grad(derivx(diff(0), diff(1), diff(2)), derivy(diff(0), diff(1), diff(2)), derivz(diff(0), diff(1), diff(2)));
-        std::cout << alpha << std::endl;
-        std::cout << "beta: " << beta(0) << "," << beta(1) << "," << beta(2) << " " << "diff: " << diff(0) << "," << diff(1) << "," << diff(2) << " " << "grad: " << grad(0) << "," << grad(1) << "," << grad(2) << std::endl;
+        //std::cout << alpha << std::endl;
+        //std::cout << "beta: " << beta(0) << "," << beta(1) << "," << beta(2) << " " << "diff: " << diff(0) << "," << diff(1) << "," << diff(2) << " " << "grad: " << grad(0) << "," << grad(1) << "," << grad(2) << std::endl;
         out += alpha*smoothfunc(diff(0), diff(1), diff(2)) - beta.dot(grad);
-        std::cout << "out: " << out << std::endl;
-    }*/
+        //std::cout << "out: " << out << std::endl;
+    }
 
-    //std::cout << "out: " << out << " out1: " << out1 << std::endl;
-    cudaFree(mPoints_dev);
-    cudaFree(unknowns_dev);
-    cudaFree(outs);
+    //std::cout << "OUT FINAL: " << out << std::endl;
+    //cudaFree(mPoints_dev);
+    //cudaFree(unknowns_dev);
+    //cudaFree(outs);
     if(out < -radius) return 1;
     if(out > radius) return 0;
     return (-3.0/16.0)*pow(out/radius, 5) + (5.0/8.0)*pow(out/radius, 3) -(15.0/16.0)*(out/radius) + 0.5;
@@ -567,9 +562,24 @@ VectorXf* HRBFGenerator::getResults()
     return results;
 }
 
+VectorXf* HRBFGenerator::getMPoints()
+{
+    return mPoints;
+}
+
+float HRBFGenerator::getRadius()
+{
+    return radius;
+}
+
 int HRBFGenerator::getNumMPoints()
 {
     return mPoints->size();
+}
+
+int HRBFGenerator::getNumUnknowns()
+{
+    return unknowns->size();
 }
 
 bool HRBFGenerator::getNeedRecalc()

@@ -15,6 +15,10 @@
 #define double3 CUDA_double3
 #define double4 CUDA_double4
 
+#include "hrbfgenerator.cuh"
+#include "hrbfmanager.cuh"
+#include "hrbfgeneratordev.cuh"
+
 #include <maya/MDataBlock.h>
 #include <maya/MDataHandle.h>
 #include <maya/MStatus.h>
@@ -35,9 +39,6 @@
 #include <maya/MFnMesh.h>
 
 #include <maya/MPxDeformerNode.h>
-
-#include "hrbfgenerator.cuh"
-#include "hrbfmanager.h"
 
 #include <maya/MFnPlugin.h>
 #include <maya/MTypeId.h>
