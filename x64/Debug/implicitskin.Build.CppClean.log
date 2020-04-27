@@ -1,17 +1,36 @@
-h:\school stuff\capstone_project\implicit_skin_gpu\x64\debug\hrbfgenerator.obj
-h:\school stuff\capstone_project\implicit_skin_gpu\x64\debug\hrbfmanager.obj
-h:\school stuff\capstone_project\implicit_skin_gpu\x64\debug\implicitskin.obj
-h:\school stuff\capstone_project\implicit_skin_gpu\x64\debug\vc142.pdb
-h:\school stuff\capstone_project\implicit_skin_gpu\debug\implicitskin.lib
-h:\school stuff\capstone_project\implicit_skin_gpu\debug\implicitskin.exp
-h:\school stuff\capstone_project\implicit_skin_gpu\debug\implicitskin.ilk
-h:\school stuff\capstone_project\implicit_skin_gpu\debug\implicitskin.mll
-h:\school stuff\capstone_project\implicit_skin_gpu\debug\implicitskin.pdb
-h:\school stuff\capstone_project\implicit_skin_gpu\x64\debug\implicitskin.tlog\cl.11000.write.1.tlog
-h:\school stuff\capstone_project\implicit_skin_gpu\x64\debug\implicitskin.tlog\cl.command.1.tlog
-h:\school stuff\capstone_project\implicit_skin_gpu\x64\debug\implicitskin.tlog\cl.read.1.tlog
-h:\school stuff\capstone_project\implicit_skin_gpu\x64\debug\implicitskin.tlog\implicitskin.write.1u.tlog
-h:\school stuff\capstone_project\implicit_skin_gpu\x64\debug\implicitskin.tlog\link.command.1.tlog
-h:\school stuff\capstone_project\implicit_skin_gpu\x64\debug\implicitskin.tlog\link.delete.1.tlog
-h:\school stuff\capstone_project\implicit_skin_gpu\x64\debug\implicitskin.tlog\link.read.1.tlog
-h:\school stuff\capstone_project\implicit_skin_gpu\x64\debug\implicitskin.tlog\link.write.1.tlog
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\implicitskin.obj
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\serialfunctions.obj
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\vc142.pdb
+x64\debug\hrbfgenerator.cu.obj
+x64\debug\hrbfgeneratordev.cu.obj
+x64\debug\hrbfmanager.cu.obj
+x64\debug\vector3fdev.cu.obj
+x64\debug\hrbfgenerator.cuh.obj
+x64\debug\hrbfmanager.cuh.obj
+h:\school stuff\capstone_project\code\implicit_skin_gpu\debug\implicitskin.lib
+h:\school stuff\capstone_project\code\implicit_skin_gpu\debug\implicitskin.exp
+h:\school stuff\capstone_project\code\implicit_skin_gpu\debug\implicitskin.mll
+h:\school stuff\capstone_project\code\implicit_skin_gpu\debug\implicitskin.ilk
+h:\school stuff\capstone_project\code\implicit_skin_gpu\debug\implicitskin.pdb
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\hrbfgenerator.cu.cache
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\hrbfgenerator.cuh.cache
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\hrbfgeneratordev.cu.cache
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\hrbfmanager.cu.cache
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\hrbfmanager.cuh.cache
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\vector3fdev.cu.cache
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\hrbfgenerator.cu.obj
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\hrbfgenerator.cuh.obj
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\hrbfgeneratordev.cu.obj
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\hrbfmanager.cu.obj
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\hrbfmanager.cuh.obj
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\implicitskin.device-link.obj
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\vector3fdev.cu.obj
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\implicitskin.tlog\cl.1632.write.1.tlog
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\implicitskin.tlog\cl.command.1.tlog
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\implicitskin.tlog\cl.read.1.tlog
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\implicitskin.tlog\cudacompile.read.1u.tlog
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\implicitskin.tlog\cudacompile.write.1u.tlog
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\implicitskin.tlog\implicitskin.write.1u.tlog
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\implicitskin.tlog\link.command.1.tlog
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\implicitskin.tlog\link.read.1.tlog
+h:\school stuff\capstone_project\code\implicit_skin_gpu\x64\debug\implicitskin.tlog\link.write.1.tlog

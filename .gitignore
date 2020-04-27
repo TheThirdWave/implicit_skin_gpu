@@ -71,3 +71,25 @@ Thumbs.db
 *.exe
 
 
+*.db
+*.opendb
+*.ipch
+*.manifest
+*.exp
+*.lib
+*.mll
+*.cache
+*.sarif
+*.deps
+*.tlog
+*.tlog
+*.lastbuildstate
+*.tlog
+*.log
+*.mll
+*.lib
+*.exp
+*.testlog
+*.db
+*.lib
+debug/implicitskin.exp

@@ -1,27 +1,998 @@
-﻿cl : command line warning D9002: ignoring unknown option '-std=c++0x'
-cl : command line warning D9002: ignoring unknown option '-std=c++0x'
-  hrbfgenerator.cpp
-cl : command line warning D9002: ignoring unknown option '-std=c++0x'
-  hrbfmanager.cpp
-H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(68,62): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(79,215): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(195,28): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(215,22): warning C4244: 'initializing': conversion from 'const _Ty' to 'float', possible loss of data
-          with
-          [
-              _Ty=double
-          ]
-H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(247,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(150,163): warning C4100: 'adjlen': unreferenced formal parameter
-H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(150,99): warning C4100: 'nz': unreferenced formal parameter
-H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(150,89): warning C4100: 'ny': unreferenced formal parameter
-H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(150,79): warning C4100: 'nx': unreferenced formal parameter
-H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfmanager.cpp(253,38): warning C4100: 'r': unreferenced formal parameter
-H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfgenerator.cpp(330,100): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-H:\School Stuff\capstone_project\implicit_skin_gpu\hrbfgenerator.cpp(481,25): warning C4244: 'return': conversion from 'Eigen::EigenBase<Derived>::Index' to 'int', possible loss of data
+﻿  Reading Qt configuration (C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\bin\qmake.exe)
+  Compiling CUDA source file hrbfmanager.cuh...
+  Compiling CUDA source file hrbfgenerator.cuh...
+  Compiling CUDA source file hrbfgeneratordev.cu...
+  Compiling CUDA source file hrbfmanager.cu...
+  Compiling CUDA source file hrbfgenerator.cu...
+  Compiling CUDA source file Vector3fDev.cu...
+  
+  H:\School Stuff\capstone_project\Code\implicit_skin_gpu>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\bin\nvcc.exe" -gencode=arch=compute_30,code=\"sm_30,compute_30\" --use-local-env -ccbin "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\bin\HostX86\x64" -x cu -rdc=true -I.\GeneratedFiles\Debug -I.\GeneratedFiles -I"C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\win32-msvc" -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtGui -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtANGLE -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtCore -I/include -I"C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\win32-msvc" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include" -I"C:\Program Files\Autodesk\Maya2019\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include"  -G   --keep-dir x64\Debug -maxrregcount=0  --machine 64 --compile -cudart static  -g   -D_WINDOWS -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DQT_GUI_LIB -DQT_CORE_LIB -D_WINDLL -DNDEBUG -D_DEBUG -DNT_PLUGIN -DREQUIRE_IOSTREAM -D_USRDLL -DMAYAPLUGIN1_EXPORTS -Xcompiler "/EHsc /W3 /nologo /Od /Fdx64\Debug\vc142.pdb /FS /Zi  /MDd " -o x64\Debug\hrbfgenerator.cu.obj "H:\School Stuff\capstone_project\Code\implicit_skin_gpu\hrbfgenerator.cu" 
+  
+  
+  H:\School Stuff\capstone_project\Code\implicit_skin_gpu>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\bin\nvcc.exe" -gencode=arch=compute_30,code=\"sm_30,compute_30\" --use-local-env -ccbin "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\bin\HostX86\x64" -x cu -rdc=true -I.\GeneratedFiles\Debug -I.\GeneratedFiles -I"C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\win32-msvc" -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtGui -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtANGLE -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtCore -I/include -I"C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\win32-msvc" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include" -I"C:\Program Files\Autodesk\Maya2019\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include"  -G   --keep-dir x64\Debug -maxrregcount=0  --machine 64 --compile -cudart static  -g   -D_WINDOWS -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DQT_GUI_LIB -DQT_CORE_LIB -D_WINDLL -DNDEBUG -D_DEBUG -DNT_PLUGIN -DREQUIRE_IOSTREAM -D_USRDLL -DMAYAPLUGIN1_EXPORTS -Xcompiler "/EHsc /W3 /nologo /Od /Fdx64\Debug\vc142.pdb /FS /Zi  /MDd " -o x64\Debug\hrbfmanager.cu.obj "H:\School Stuff\capstone_project\Code\implicit_skin_gpu\hrbfmanager.cu" 
+  H:\School Stuff\capstone_project\Code\implicit_skin_gpu>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\bin\nvcc.exe" -gencode=arch=compute_30,code=\"sm_30,compute_30\" --use-local-env -ccbin "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\bin\HostX86\x64" -x cu -rdc=true -I.\GeneratedFiles\Debug -I.\GeneratedFiles -I"C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\win32-msvc" -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtGui -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtANGLE -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtCore -I/include -I"C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\win32-msvc" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include" -I"C:\Program Files\Autodesk\Maya2019\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include"  -G   --keep-dir x64\Debug -maxrregcount=0  --machine 64 --compile -cudart static  -g   -D_WINDOWS -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DQT_GUI_LIB -DQT_CORE_LIB -D_WINDLL -DNDEBUG -D_DEBUG -DNT_PLUGIN -DREQUIRE_IOSTREAM -D_USRDLL -DMAYAPLUGIN1_EXPORTS -Xcompiler "/EHsc /W3 /nologo /Od /Fdx64\Debug\vc142.pdb /FS /Zi  /MDd " -o x64\Debug\hrbfgeneratordev.cu.obj "H:\School Stuff\capstone_project\Code\implicit_skin_gpu\hrbfgeneratordev.cu" 
+  
+  H:\School Stuff\capstone_project\Code\implicit_skin_gpu>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\bin\nvcc.exe" -gencode=arch=compute_30,code=\"sm_30,compute_30\" --use-local-env -ccbin "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\bin\HostX86\x64" -x cu -rdc=true -I.\GeneratedFiles\Debug -I.\GeneratedFiles -I"C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\win32-msvc" -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtGui -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtANGLE -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtCore -I/include -I"C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\win32-msvc" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include" -I"C:\Program Files\Autodesk\Maya2019\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include"  -G   --keep-dir x64\Debug -maxrregcount=0  --machine 64 --compile -cudart static  -g   -D_WINDOWS -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DQT_GUI_LIB -DQT_CORE_LIB -D_WINDLL -DNDEBUG -D_DEBUG -DNT_PLUGIN -DREQUIRE_IOSTREAM -D_USRDLL -DMAYAPLUGIN1_EXPORTS -Xcompiler "/EHsc /W3 /nologo /Od /Fdx64\Debug\vc142.pdb /FS /Zi  /MDd " -o x64\Debug\hrbfgenerator.cuh.obj "H:\School Stuff\capstone_project\Code\implicit_skin_gpu\hrbfgenerator.cuh" 
+  
+  H:\School Stuff\capstone_project\Code\implicit_skin_gpu>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\bin\nvcc.exe" -gencode=arch=compute_30,code=\"sm_30,compute_30\" --use-local-env -ccbin "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\bin\HostX86\x64" -x cu -rdc=true -I.\GeneratedFiles\Debug -I.\GeneratedFiles -I"C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\win32-msvc" -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtGui -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtANGLE -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtCore -I/include -I"C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\win32-msvc" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include" -I"C:\Program Files\Autodesk\Maya2019\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include"  -G   --keep-dir x64\Debug -maxrregcount=0  --machine 64 --compile -cudart static  -g   -D_WINDOWS -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DQT_GUI_LIB -DQT_CORE_LIB -D_WINDLL -DNDEBUG -D_DEBUG -DNT_PLUGIN -DREQUIRE_IOSTREAM -D_USRDLL -DMAYAPLUGIN1_EXPORTS -Xcompiler "/EHsc /W3 /nologo /Od /Fdx64\Debug\vc142.pdb /FS /Zi  /MDd " -o x64\Debug\hrbfmanager.cuh.obj "H:\School Stuff\capstone_project\Code\implicit_skin_gpu\hrbfmanager.cuh" 
+  
+  H:\School Stuff\capstone_project\Code\implicit_skin_gpu>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\bin\nvcc.exe" -gencode=arch=compute_30,code=\"sm_30,compute_30\" --use-local-env -ccbin "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.25.28610\bin\HostX86\x64" -x cu -rdc=true -I.\GeneratedFiles\Debug -I.\GeneratedFiles -I"C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\win32-msvc" -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtGui -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtANGLE -IC:\Qt\Qt5.14.2\5.14.2\msvc2017_64\include\QtCore -I/include -I"C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\mkspecs\win32-msvc" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include" -I"C:\Program Files\Autodesk\Maya2019\include" -I"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\include"  -G   --keep-dir x64\Debug -maxrregcount=0  --machine 64 --compile -cudart static  -g   -D_WINDOWS -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DUNICODE -D_UNICODE -DWIN32 -D_ENABLE_EXTENDED_ALIGNED_STORAGE -DWIN64 -DQT_GUI_LIB -DQT_CORE_LIB -D_WINDLL -DNDEBUG -D_DEBUG -DNT_PLUGIN -DREQUIRE_IOSTREAM -D_USRDLL -DMAYAPLUGIN1_EXPORTS -Xcompiler "/EHsc /W3 /nologo /Od /Fdx64\Debug\vc142.pdb /FS /Zi  /MDd " -o x64\Debug\Vector3fDev.cu.obj "H:\School Stuff\capstone_project\Code\implicit_skin_gpu\Vector3fDev.cu" 
+H:/School Stuff/capstone_project/Code/implicit_skin_gpu/Vector3fDev.cu(1): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\hrbfgeneratordev.cuh(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\hrbfgeneratordev.cuh(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\hrbfgeneratordev.cuh(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/util/Memory.h(73): warning : ignoring return value from routine declared with "nodiscard" attribute
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/util/Memory.h(73): warning : ignoring return value from routine declared with "nodiscard" attribute
+  
+H:/School Stuff/capstone_project/Code/implicit_skin_gpu/Vector3fDev.cu(1): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function("real") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function("real") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function("imag") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function("imag") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function("real") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function("imag") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function("real") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function("imag") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/arch/CUDA/Half.h(302): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/arch/CUDA/Half.h(305): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/arch/CUDA/Half.h(302): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/arch/CUDA/Half.h(305): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/util/Memory.h(73): warning : ignoring return value from routine declared with "nodiscard" attribute
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/util/Memory.h(73): warning : ignoring return value from routine declared with "nodiscard" attribute
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function("real") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function("imag") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function("real") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function("imag") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function("real") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function("imag") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function("real") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function("imag") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/util/Memory.h(73): warning : ignoring return value from routine declared with "nodiscard" attribute
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/arch/CUDA/Half.h(302): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/arch/CUDA/Half.h(305): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/arch/CUDA/Half.h(302): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/arch/CUDA/Half.h(305): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function("real") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function("imag") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1075): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function("real") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function("imag") from a __host__ __device__ function("abs") is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/MathFunctions.h(1080): warning : calling a constexpr __host__ function from a __host__ __device__ function is not allowed. The experimental flag '--expt-relaxed-constexpr' can be used to allow this.
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/arch/CUDA/Half.h(302): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/arch/CUDA/Half.h(305): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/products/Parallelizer.h(20): warning : variable "m_maxThreads" was set but never used
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/products/Parallelizer.h(20): warning : variable "m_maxThreads" was set but never used
+  
+  Vector3fDev.cu
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/ArrayWrapper.h(94): warning : __declspec attributes ignored
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/products/Parallelizer.h(20): warning : variable "m_maxThreads" was set but never used
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/products/Parallelizer.h(20): warning : variable "m_maxThreads" was set but never used
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/ArrayWrapper.h(94): warning : __declspec attributes ignored
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/ArrayWrapper.h(94): warning : __declspec attributes ignored
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/products/Parallelizer.h(20): warning : variable "m_maxThreads" was set but never used
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/ArrayWrapper.h(94): warning : __declspec attributes ignored
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/ArrayWrapper.h(94): warning : __declspec attributes ignored
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(94): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(94): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(94): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(95): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(94): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(95): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(95): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(95): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(143): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(143): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(143): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(143): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfgenerator.cuh(17): warning : variable "identity" was declared but never referenced
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(98): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(98): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(99): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(98): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(98): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(99): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(99): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(99): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(176): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(176): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(176): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(176): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(94): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(97): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(94): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(97): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(95): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(97): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(98): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(95): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(97): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(98): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(143): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(98): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(143): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(98): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(249): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(249): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(249): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(249): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(98): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(98): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(99): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(99): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(176): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(176): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x2.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x2.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x2.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x2.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x3.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x3.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x3.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x3.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x4.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x4.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(97): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(97): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(98): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(98): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x4.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x4.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(249): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(249): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x2.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x2.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x2.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x2.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x3.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x3.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x3.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x3.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x4.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x2.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x4.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x2.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x4.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x3.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x4.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x3.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x2.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x2.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x4.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x2.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x4.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x3.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x2.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x3.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x2.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x3.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x2.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x4.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x3.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x4.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x3.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x4.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x3.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x4.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(95): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x4.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x4.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(95): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(96): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(96): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x2.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x2.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(95): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(132): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(132): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(95): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x3.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x3.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(96): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(96): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(132): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x4.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(132): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x4.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(95): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(95): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(96): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(96): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(132): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(132): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(83): warning : __device__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(83): warning : __device__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(83): warning : __host__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(83): warning : __host__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(84): warning : __device__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(84): warning : __device__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(84): warning : __host__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(84): warning : __host__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(119): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(119): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(119): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(119): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(83): warning : __device__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(83): warning : __host__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(84): warning : __device__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(84): warning : __host__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(119): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(119): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/ProductEvaluators.h(124): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+            detected during:
+              instantiation of "Eigen::internal::product_evaluator<Eigen::Product<Lhs, Rhs, Options>, ProductTag, LhsShape, RhsShape, Eigen::internal::traits<Eigen::Product<Lhs, Rhs, Options>::Lhs>::Scalar, Eigen::internal::traits<Eigen::Product<Lhs, Rhs, Options>::Rhs>::Scalar>::product_evaluator(const Eigen::internal::product_evaluator<Eigen::Product<Lhs, Rhs, Options>, ProductTag, LhsShape, RhsShape, Eigen::internal::traits<Eigen::Product<Lhs, Rhs, Options>::Lhs>::Scalar, Eigen::internal::traits<Eigen::Product<Lhs, Rhs, Options>::Rhs>::Scalar>::XprType &) [with Lhs=Eigen::Transpose<Eigen::Matrix<float, 3, 1, 0, 3, 1>>, Rhs=Eigen::Matrix<float, 3, 1, 0, 3, 1>, Options=0, ProductTag=6, LhsShape=Eigen::DenseShape, RhsShape=Eigen::DenseShape]" 
+  (35): here
+              instantiation of "Eigen::internal::evaluator<Eigen::Product<Lhs, Rhs, Options>>::evaluator(const Eigen::internal::evaluator<Eigen::Product<Lhs, Rhs, Options>>::XprType &) [with Lhs=Eigen::Transpose<Eigen::Matrix<float, 3, 1, 0, 3, 1>>, Rhs=Eigen::Matrix<float, 3, 1, 0, 3, 1>, Options=0]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/Product.h(133): here
+              instantiation of "Eigen::internal::dense_product_base<Lhs, Rhs, Option, 6>::operator const Eigen::internal::dense_product_base<Lhs, Rhs, Option, 6>::Scalar() const [with Lhs=Eigen::Transpose<Eigen::Matrix<float, 3, 1, 0, 3, 1>>, Rhs=Eigen::Matrix<float, 3, 1, 0, 3, 1>, Option=0]" 
+  H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfgenerator.cu(53): here
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/AssignEvaluator.h(836): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+            detected during:
+              instantiation of "void Eigen::internal::call_assignment_no_alias(Dst &, const Src &, const Func &) [with Dst=Eigen::Matrix<float, 3, 1, 0, 3, 1>, Src=Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>, Func=Eigen::internal::sub_assign_op<float, float>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/ProductEvaluators.h(224): here
+              instantiation of "void Eigen::internal::assignment_from_xpr_op_product<DstXprType, OtherXpr, ProductType, Func1, Func2>::run(DstXprType &, const SrcXprType &, const InitialFunc &) [with DstXprType=Eigen::Matrix<float, 3, 1, 0, 3, 1>, OtherXpr=Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, ProductType=Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>, Func1=Eigen::internal::assign_op<float, float>, Func2=Eigen::internal::sub_assign_op<float, float>, SrcXprType=Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<float, float>, const Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>>, InitialFunc=Eigen::internal::assign_op<float, float>]" 
+  (836): here
+              instantiation of "void Eigen::internal::call_assignment_no_alias(Dst &, const Src &, const Func &) [with Dst=Eigen::Matrix<float, 3, 1, 0, 3, 1>, Src=Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<float, float>, const Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>>, Func=Eigen::internal::assign_op<float, float>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/PlainObjectBase.h(732): here
+              instantiation of "Derived &Eigen::PlainObjectBase<Derived>::_set_noalias(const Eigen::DenseBase<OtherDerived> &) [with Derived=Eigen::Matrix<float, 3, 1, 0, 3, 1>, OtherDerived=Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<float, float>, const Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/PlainObjectBase.h(817): here
+              instantiation of "void Eigen::PlainObjectBase<Derived>::_init1<T,OtherDerived>(const Eigen::DenseBase<OtherDerived> &) [with Derived=Eigen::Matrix<float, 3, 1, 0, 3, 1>, T=Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<float, float>, const Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>>, OtherDerived=Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<float, float>, const Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/Matrix.h(294): here
+              instantiation of "Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Matrix(const T &) [with _Scalar=float, _Rows=3, _Cols=1, _Options=0, _MaxRows=3, _MaxCols=1, T=Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<float, float>, const Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>>]" 
+  (796): here
+              instantiation of "void Eigen::internal::call_assignment(Dst &, const Src &, const Func &, Eigen::internal::enable_if<Eigen::internal::evaluator_assume_aliasing<Src, Eigen::internal::evaluator_traits<Src>::Shape>::value, void *>::type) [with Dst=Eigen::Matrix<float, 3, 1, 0, 3, 1>, Src=Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<float, float>, const Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>>, Func=Eigen::internal::add_assign_op<float, float>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/CwiseBinaryOp.h(177): here
+              instantiation of "Derived &Eigen::MatrixBase<Derived>::operator+=(const Eigen::MatrixBase<OtherDerived> &) [with Derived=Eigen::Matrix<float, 3, 1, 0, 3, 1>, OtherDerived=Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<float, float>, const Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>>]" 
+  H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfgenerator.cu(433): here
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/AssignEvaluator.h(836): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+            detected during:
+              instantiation of "void Eigen::internal::call_assignment_no_alias(Dst &, const Src &, const Func &) [with Dst=Eigen::Matrix<float, 3, 1, 0, 3, 1>, Src=Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<float, float>, const Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>>, Func=Eigen::internal::assign_op<float, float>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/PlainObjectBase.h(732): here
+              instantiation of "Derived &Eigen::PlainObjectBase<Derived>::_set_noalias(const Eigen::DenseBase<OtherDerived> &) [with Derived=Eigen::Matrix<float, 3, 1, 0, 3, 1>, OtherDerived=Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<float, float>, const Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/PlainObjectBase.h(817): here
+              instantiation of "void Eigen::PlainObjectBase<Derived>::_init1<T,OtherDerived>(const Eigen::DenseBase<OtherDerived> &) [with Derived=Eigen::Matrix<float, 3, 1, 0, 3, 1>, T=Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<float, float>, const Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>>, OtherDerived=Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<float, float>, const Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/Matrix.h(294): here
+              instantiation of "Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Matrix(const T &) [with _Scalar=float, _Rows=3, _Cols=1, _Options=0, _MaxRows=3, _MaxCols=1, T=Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<float, float>, const Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>>]" 
+  (796): here
+              instantiation of "void Eigen::internal::call_assignment(Dst &, const Src &, const Func &, Eigen::internal::enable_if<Eigen::internal::evaluator_assume_aliasing<Src, Eigen::internal::evaluator_traits<Src>::Shape>::value, void *>::type) [with Dst=Eigen::Matrix<float, 3, 1, 0, 3, 1>, Src=Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<float, float>, const Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>>, Func=Eigen::internal::add_assign_op<float, float>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/CwiseBinaryOp.h(177): here
+              instantiation of "Derived &Eigen::MatrixBase<Derived>::operator+=(const Eigen::MatrixBase<OtherDerived> &) [with Derived=Eigen::Matrix<float, 3, 1, 0, 3, 1>, OtherDerived=Eigen::CwiseBinaryOp<Eigen::internal::scalar_difference_op<float, float>, const Eigen::CwiseBinaryOp<Eigen::internal::scalar_product_op<float, float>, const Eigen::CwiseNullaryOp<Eigen::internal::scalar_constant_op<float>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Matrix<float, 3, 1, 0, 3, 1>>, const Eigen::Product<Eigen::Matrix<float, 3, 3, 0, 3, 3>, Eigen::Matrix<float, 3, 1, 0, 3, 1>, 0>>]" 
+  H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfgenerator.cu(433): here
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/DenseStorage.h(543): warning : calling a __host__ function("std::swap<float *, (int)0> ") from a __host__ __device__ function("Eigen::DenseStorage<float, (int)-1, (int)-1, (int)1, (int)0> ::swap") is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/DenseStorage.h(543): warning : calling a __host__ function("std::swap<long long, (int)0> ") from a __host__ __device__ function("Eigen::DenseStorage<float, (int)-1, (int)-1, (int)1, (int)0> ::swap") is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/ProductEvaluators.h(124): warning : calling a __host__ function("Eigen::internal::generic_product_impl< ::Eigen::Transpose< ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> > ,  ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> ,  ::Eigen::DenseShape,  ::Eigen::DenseShape, (int)6> ::evalTo< ::Eigen::Matrix<float, (int)1, (int)1, (int)0, (int)1, (int)1> > ") from a __host__ __device__ function("Eigen::internal::product_evaluator< ::Eigen::Product< ::Eigen::Transpose< ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> > ,  ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> , (int)0> , (int)6,  ::Eigen::DenseShape,  ::Eigen::DenseShape, float, float> ::product_evaluator") is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/AssignEvaluator.h(836): warning : calling a __host__ function("Eigen::internal::assignment_from_xpr_op_product< ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> ,  ::Eigen::CwiseBinaryOp< ::Eigen::internal::scalar_product_op<float, float> , const  ::Eigen::CwiseNullaryOp< ::Eigen::internal::scalar_constant_op<float> , const  ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> > , const  ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> > ,  ::Eigen::Product< ::Eigen::Matrix<float, (int)3, (int)3, (int)0, (int)3, (int)3> ,  ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> , (int)0> ,  ::Eigen::internal::assign_op<float, float> ,  ::Eigen::internal::sub_assign_op<float, float> > ::run< ::Eigen::CwiseBinaryOp< ::Eigen::internal::scalar_difference_op<float, float> , const  ::Eigen::CwiseBinaryOp< ::Eigen::internal::scalar_product_op<float, float> , const  ::Eigen::CwiseNullaryOp< ::Eigen::internal::scalar_constant_op<float> , const  ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> > , const  ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> > , const  ::Eigen::Product< ::Eigen::Matrix<float, (int)3, (int)3, (int)0, (int)3, (int)3> ,  ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> , (int)0> > ,  ::Eigen::internal::assign_op<float, float> > ") from a __host__ __device__ function("Eigen::internal::call_assignment_no_alias< ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> ,  ::Eigen::CwiseBinaryOp< ::Eigen::internal::scalar_difference_op<float, float> , const  ::Eigen::CwiseBinaryOp< ::Eigen::internal::scalar_product_op<float, float> , const  ::Eigen::CwiseNullaryOp< ::Eigen::internal::scalar_constant_op<float> , const  ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> > , const  ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> > , const  ::Eigen::Product< ::Eigen::Matrix<float, (int)3, (int)3, (int)0, (int)3, (int)3> ,  ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> , (int)0> > ,  ::Eigen::internal::assign_op<float, float> > ") is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/AssignEvaluator.h(836): warning : calling a __host__ function("Eigen::internal::Assignment< ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> ,  ::Eigen::Product< ::Eigen::Matrix<float, (int)3, (int)3, (int)0, (int)3, (int)3> ,  ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> , (int)0> ,  ::Eigen::internal::sub_assign_op<float, float> ,  ::Eigen::internal::Dense2Dense, void> ::run") from a __host__ __device__ function("Eigen::internal::call_assignment_no_alias< ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> ,  ::Eigen::Product< ::Eigen::Matrix<float, (int)3, (int)3, (int)0, (int)3, (int)3> ,  ::Eigen::Matrix<float, (int)3, (int)1, (int)0, (int)3, (int)1> , (int)0> ,  ::Eigen::internal::sub_assign_op<float, float> > ") is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/AssignEvaluator.h(836): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+            detected during:
+              instantiation of "void Eigen::internal::call_assignment_no_alias(Dst &, const Src &, const Func &) [with Dst=Eigen::Matrix<float, 1, 4, 1, 1, 4>, Src=Eigen::Product<Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, Eigen::Matrix<float, 4, 4, 0, 4, 4>, 0>, Func=Eigen::internal::assign_op<float, float>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/PlainObjectBase.h(732): here
+              instantiation of "Derived &Eigen::PlainObjectBase<Derived>::_set_noalias(const Eigen::DenseBase<OtherDerived> &) [with Derived=Eigen::Matrix<float, 1, 4, 1, 1, 4>, OtherDerived=Eigen::Product<Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, Eigen::Matrix<float, 4, 4, 0, 4, 4>, 0>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/PlainObjectBase.h(817): here
+              instantiation of "void Eigen::PlainObjectBase<Derived>::_init1<T,OtherDerived>(const Eigen::DenseBase<OtherDerived> &) [with Derived=Eigen::Matrix<float, 1, 4, 1, 1, 4>, T=Eigen::Product<Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, Eigen::Matrix<float, 4, 4, 0, 4, 4>, 0>, OtherDerived=Eigen::Product<Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, Eigen::Matrix<float, 4, 4, 0, 4, 4>, 0>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/Matrix.h(294): here
+              instantiation of "Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Matrix(const T &) [with _Scalar=float, _Rows=1, _Cols=4, _Options=1, _MaxRows=1, _MaxCols=4, T=Eigen::Product<Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, Eigen::Matrix<float, 4, 4, 0, 4, 4>, 0>]" 
+  (796): here
+              instantiation of "void Eigen::internal::call_assignment(Dst &, const Src &, const Func &, Eigen::internal::enable_if<Eigen::internal::evaluator_assume_aliasing<Src, Eigen::internal::evaluator_traits<Src>::Shape>::value, void *>::type) [with Dst=Eigen::Matrix<float, 4, 1, 0, 4, 1>, Src=Eigen::Product<Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, Eigen::Matrix<float, 4, 4, 0, 4, 4>, 0>, Func=Eigen::internal::assign_op<float, float>]" 
+  (782): here
+              instantiation of "void Eigen::internal::call_assignment(Dst &, const Src &) [with Dst=Eigen::Matrix<float, 4, 1, 0, 4, 1>, Src=Eigen::Product<Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, Eigen::Matrix<float, 4, 4, 0, 4, 4>, 0>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/PlainObjectBase.h(714): here
+              instantiation of "Derived &Eigen::PlainObjectBase<Derived>::_set(const Eigen::DenseBase<OtherDerived> &) [with Derived=Eigen::Matrix<float, 4, 1, 0, 4, 1>, OtherDerived=Eigen::Product<Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, Eigen::Matrix<float, 4, 4, 0, 4, 4>, 0>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/Matrix.h(225): here
+              instantiation of "Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols> &Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::operator=(const Eigen::DenseBase<OtherDerived> &) [with _Scalar=float, _Rows=4, _Cols=1, _Options=0, _MaxRows=4, _MaxCols=1, OtherDerived=Eigen::Product<Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, Eigen::Matrix<float, 4, 4, 0, 4, 4>, 0>]" 
+  H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfmanager.cu(127): here
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/AssignEvaluator.h(720): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+            detected during:
+              instantiation of "void Eigen::internal::resize_if_allowed(DstXprType &, const SrcXprType &, const Eigen::internal::assign_op<T1, T2> &) [with DstXprType=Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, SrcXprType=Eigen::Matrix<float, 1, 4, 1, 1, 4>, T1=float, T2=float]" 
+  (734): here
+              instantiation of "void Eigen::internal::call_dense_assignment_loop(DstXprType &, const SrcXprType &, const Functor &) [with DstXprType=Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, SrcXprType=Eigen::Matrix<float, 1, 4, 1, 1, 4>, Functor=Eigen::internal::assign_op<float, float>]" 
+  (879): here
+              instantiation of "void Eigen::internal::Assignment<DstXprType, SrcXprType, Functor, Eigen::internal::Dense2Dense, Weak>::run(DstXprType &, const SrcXprType &, const Functor &) [with DstXprType=Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, SrcXprType=Eigen::Matrix<float, 1, 4, 1, 1, 4>, Functor=Eigen::internal::assign_op<float, float>, Weak=void]" 
+  (836): here
+              instantiation of "void Eigen::internal::call_assignment_no_alias(Dst &, const Src &, const Func &) [with Dst=Eigen::Matrix<float, 4, 1, 0, 4, 1>, Src=Eigen::Matrix<float, 1, 4, 1, 1, 4>, Func=Eigen::internal::assign_op<float, float>]" 
+  (797): here
+              instantiation of "void Eigen::internal::call_assignment(Dst &, const Src &, const Func &, Eigen::internal::enable_if<Eigen::internal::evaluator_assume_aliasing<Src, Eigen::internal::evaluator_traits<Src>::Shape>::value, void *>::type) [with Dst=Eigen::Matrix<float, 4, 1, 0, 4, 1>, Src=Eigen::Product<Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, Eigen::Matrix<float, 4, 4, 0, 4, 4>, 0>, Func=Eigen::internal::assign_op<float, float>]" 
+  (782): here
+              instantiation of "void Eigen::internal::call_assignment(Dst &, const Src &) [with Dst=Eigen::Matrix<float, 4, 1, 0, 4, 1>, Src=Eigen::Product<Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, Eigen::Matrix<float, 4, 4, 0, 4, 4>, 0>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/PlainObjectBase.h(714): here
+              instantiation of "Derived &Eigen::PlainObjectBase<Derived>::_set(const Eigen::DenseBase<OtherDerived> &) [with Derived=Eigen::Matrix<float, 4, 1, 0, 4, 1>, OtherDerived=Eigen::Product<Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, Eigen::Matrix<float, 4, 4, 0, 4, 4>, 0>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/Matrix.h(225): here
+              instantiation of "Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols> &Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::operator=(const Eigen::DenseBase<OtherDerived> &) [with _Scalar=float, _Rows=4, _Cols=1, _Options=0, _MaxRows=4, _MaxCols=1, OtherDerived=Eigen::Product<Eigen::Transpose<Eigen::Matrix<float, 4, 1, 0, 4, 1>>, Eigen::Matrix<float, 4, 4, 0, 4, 4>, 0>]" 
+  H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfmanager.cu(127): here
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/NumTraits.h(118): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+            detected during:
+              instantiation of "int Eigen::GenericNumTraits<T>::digits10() [with T=float]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/IO.h(122): here
+              instantiation of "int Eigen::internal::significant_decimals_impl<Scalar>::run() [with Scalar=float]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/IO.h(155): here
+              instantiation of "std::ostream &Eigen::internal::print_matrix(std::ostream &, const Derived &, const Eigen::IOFormat &) [with Derived=Eigen::Matrix<float, 4, 4, 0, 4, 4>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/IO.h(220): here
+              instantiation of "std::ostream &Eigen::operator<<(std::ostream &, const Eigen::DenseBase<Derived> &) [with Derived=Eigen::Matrix<float, 4, 4, 0, 4, 4>]" 
+  H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfmanager.cu(259): here
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/AssignEvaluator.h(836): warning : calling a __host__ function from a __host__ __device__ function is not allowed
+            detected during:
+              instantiation of "void Eigen::internal::call_assignment_no_alias(Dst &, const Src &, const Func &) [with Dst=Eigen::Matrix<float, 4, 4, 0, 4, 4>, Src=Eigen::Inverse<Eigen::Matrix<float, 4, 4, 0, 4, 4>>, Func=Eigen::internal::assign_op<float, float>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/PlainObjectBase.h(732): here
+              instantiation of "Derived &Eigen::PlainObjectBase<Derived>::_set_noalias(const Eigen::DenseBase<OtherDerived> &) [with Derived=Eigen::Matrix<float, 4, 4, 0, 4, 4>, OtherDerived=Eigen::Inverse<Eigen::Matrix<float, 4, 4, 0, 4, 4>>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/PlainObjectBase.h(537): here
+              instantiation of "Eigen::PlainObjectBase<Derived>::PlainObjectBase(const Eigen::DenseBase<OtherDerived> &) [with Derived=Eigen::Matrix<float, 4, 4, 0, 4, 4>, OtherDerived=Eigen::Inverse<Eigen::Matrix<float, 4, 4, 0, 4, 4>>]" 
+  H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/Matrix.h(378): here
+              instantiation of "Eigen::Matrix<_Scalar, _Rows, _Cols, _Options, _MaxRows, _MaxCols>::Matrix(const Eigen::EigenBase<OtherDerived> &) [with _Scalar=float, _Rows=4, _Cols=4, _Options=0, _MaxRows=4, _MaxCols=4, OtherDerived=Eigen::Inverse<Eigen::Matrix<float, 4, 4, 0, 4, 4>>]" 
+  H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfmanager.cu(262): here
+  
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\hrbfgeneratordev.cuh(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/NumTraits.h(118): warning : calling a __host__ function("Eigen::internal::default_digits10_impl<float, (bool)1, (bool)0> ::run") from a __host__ __device__ function("Eigen::GenericNumTraits<float> ::digits10") is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/AssignEvaluator.h(836): warning : calling a __host__ function("Eigen::internal::Assignment< ::Eigen::Matrix<float, (int)1, (int)4, (int)1, (int)1, (int)4> ,  ::Eigen::Product< ::Eigen::Transpose< ::Eigen::Matrix<float, (int)4, (int)1, (int)0, (int)4, (int)1> > ,  ::Eigen::Matrix<float, (int)4, (int)4, (int)0, (int)4, (int)4> , (int)0> ,  ::Eigen::internal::assign_op<float, float> ,  ::Eigen::internal::Dense2Dense, void> ::run") from a __host__ __device__ function("Eigen::internal::call_assignment_no_alias< ::Eigen::Matrix<float, (int)1, (int)4, (int)1, (int)1, (int)4> ,  ::Eigen::Product< ::Eigen::Transpose< ::Eigen::Matrix<float, (int)4, (int)1, (int)0, (int)4, (int)1> > ,  ::Eigen::Matrix<float, (int)4, (int)4, (int)0, (int)4, (int)4> , (int)0> ,  ::Eigen::internal::assign_op<float, float> > ") is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/AssignEvaluator.h(720): warning : calling a __host__ function("Eigen::Transpose< ::Eigen::Matrix<float, (int)4, (int)1, (int)0, (int)4, (int)1> > ::resize") from a __host__ __device__ function("Eigen::internal::resize_if_allowed< ::Eigen::Transpose< ::Eigen::Matrix<float, (int)4, (int)1, (int)0, (int)4, (int)1> > ,  ::Eigen::Matrix<float, (int)1, (int)4, (int)1, (int)1, (int)4> , float, float> ") is not allowed
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/AssignEvaluator.h(836): warning : calling a __host__ function("Eigen::internal::Assignment< ::Eigen::Matrix<float, (int)4, (int)4, (int)0, (int)4, (int)4> ,  ::Eigen::Inverse< ::Eigen::Matrix<float, (int)4, (int)4, (int)0, (int)4, (int)4> > ,  ::Eigen::internal::assign_op<float, float> ,  ::Eigen::internal::Dense2Dense, void> ::run") from a __host__ __device__ function("Eigen::internal::call_assignment_no_alias< ::Eigen::Matrix<float, (int)4, (int)4, (int)0, (int)4, (int)4> ,  ::Eigen::Inverse< ::Eigen::Matrix<float, (int)4, (int)4, (int)0, (int)4, (int)4> > ,  ::Eigen::internal::assign_op<float, float> > ") is not allowed
+  
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\hrbfgeneratordev.cuh(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/ArrayWrapper.h(94): warning : __declspec attributes ignored
+  
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/ArrayWrapper.h(94): warning : __declspec attributes ignored
+  
+  hrbfgenerator.cuh
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/ArrayWrapper.h(94): warning : __declspec attributes ignored
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(94): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(94): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(95): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(95): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(143): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(143): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(98): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(98): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(99): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(99): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(176): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(176): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(97): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(97): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(98): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(98): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(249): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(249): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x2.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x2.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x3.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x3.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x4.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x4.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x2.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x2.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x3.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x3.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x4.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x4.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x2.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x2.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(94): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(94): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x3.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(95): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(95): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x3.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(143): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(143): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x4.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x4.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(98): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(98): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(99): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(99): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(176): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(95): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(176): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(95): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(96): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(96): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(132): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(132): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(97): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(97): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(98): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(98): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(249): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(249): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x2.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x2.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x3.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x3.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x4.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x4.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x2.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x2.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x3.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x3.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(83): warning : __device__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(83): warning : __host__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(84): warning : __device__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(84): warning : __host__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(119): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(119): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x4.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x4.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x2.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x2.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x3.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x3.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x4.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x4.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(95): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(95): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(96): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(96): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(132): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(132): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\hrbfgeneratordev.cuh(8): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(83): warning : __device__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(83): warning : __host__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(84): warning : __device__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(84): warning : __host__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(119): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(119): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+  host_defines.h is an internal header file and must not be used directly.  This file will be removed in a future CUDA release.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/ArrayWrapper.h(94): warning : __declspec attributes ignored
+  
+  hrbfmanager.cuh
+  hrbfgeneratordev.cu
+  hrbfgenerator.cu
+H:\School Stuff\capstone_project\Code\eigen-3.3.7\Eigen\src/Core/ArrayWrapper.h(94): warning : __declspec attributes ignored
+  
+  host_defines.h is an internal header file and must not be used directly.  This file will be removed in a future CUDA release.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(94): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(94): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(95): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(95): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(143): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec2.hpp(143): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(98): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(98): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(99): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(99): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(176): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec3.hpp(176): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(97): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(97): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(98): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(98): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(249): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_vec4.hpp(249): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+  host_defines.h is an internal header file and must not be used directly.  This file will be removed in a future CUDA release.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x2.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x2.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x3.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x3.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x4.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat2x4.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x2.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x2.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x3.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x3.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x4.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat3x4.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x2.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x2.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x3.hpp(36): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x3.hpp(36): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x4.hpp(35): warning : __device__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_mat4x4.hpp(35): warning : __host__ annotation is ignored on a function("mat") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(95): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(95): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(96): warning : __device__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(96): warning : __host__ annotation is ignored on a function("vec") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(132): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\detail/type_vec1.hpp(132): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(83): warning : __device__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(83): warning : __host__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(84): warning : __device__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(84): warning : __host__ annotation is ignored on a function("qua") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(119): warning : __device__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+H:\School Stuff\capstone_project\Code\glm\glm\ext\../detail/type_quat.hpp(119): warning : __host__ annotation is ignored on a function("operator=") that is explicitly defaulted on its first declaration
+  
+  hrbfmanager.cu
+  host_defines.h is an internal header file and must not be used directly.  This file will be removed in a future CUDA release.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
+H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfgenerator.cu(395): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfgenerator.cu(577): warning C4244: 'return': conversion from 'Eigen::EigenBase<Derived>::Index' to 'int', possible loss of data
           with
           [
               Derived=Eigen::Matrix<float,-1,1,0,-1,1>
           ]
+H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfgenerator.cu(582): warning C4244: 'return': conversion from 'Eigen::EigenBase<Derived>::Index' to 'int', possible loss of data
+          with
+          [
+              Derived=Eigen::Matrix<float,-1,1,0,-1,1>
+          ]
+  host_defines.h is an internal header file and must not be used directly.  This file will be removed in a future CUDA release.  Please use cuda_runtime_api.h or cuda_runtime.h instead.
+H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfmanager.cu(78): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfmanager.cu(89): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfmanager.cu(104): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfmanager.cu(284): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfmanager.cu(306): warning C4244: 'initializing': conversion from 'const _Ty' to 'float', possible loss of data
+          with
+          [
+              _Ty=double
+          ]
+H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfmanager.cu(343): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfmanager.cu(553): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfmanager.cu(554): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+H:/School Stuff/capstone_project/Code/implicit_skin_gpu/hrbfmanager.cu(555): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+cl : command line warning D9002: ignoring unknown option '-std=c++0x'
+cl : command line warning D9002: ignoring unknown option '-std=c++0x'
+  SerialFunctions.cpp
+cl : command line warning D9002: ignoring unknown option '-std=c++0x'
+  implicitskin.cpp
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\hrbfgeneratordev.cuh(8,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline (compiling source file implicitskin.cpp)
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(134,28): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(135,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(136,30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(137,32): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(138,34): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(139,34): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(169,36): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(170,40): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(171,40): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(220,31): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(221,35): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(222,35): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(224,29): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(225,33): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(226,33): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(28,36): warning C4100: 'multiIndex': unreferenced formal parameter
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(301,22): warning C4018: '<': signed/unsigned mismatch
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(305,28): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(306,30): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+H:\School Stuff\capstone_project\Code\implicit_skin_gpu\implicitskin.cpp(307,30): warning C4244: '=': conversion from 'double' to '_Ty', possible loss of data
+          with
+          [
+              _Ty=float
+          ]
+  
+  H:\School Stuff\capstone_project\Code\implicit_skin_gpu>"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\bin\nvcc.exe" -dlink -o x64\Debug\implicitskin.device-link.obj -Xcompiler "/EHsc /W3 /nologo /Od /Zi  /MDd " -L"C:\Program Files\Autodesk\Maya2019\lib" -LC:\openssl\lib -L"C:\Utils\my_sql\mysql-5.7.25-winx64\lib" -LC:\Utils\postgresql\pgsql\lib -L"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\lib\x64" -L"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\lib\x64" -L"C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.2\lib\x64" cudart.lib cuda.lib Foundation.lib OpenMaya.lib OpenMayaUI.lib OpenMayaAnim.lib OpenMayaFX.lib OpenMayaRender.lib Image.lib opengl32.lib C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\lib\Qt5Guid.lib C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\lib\Qt5Cored.lib C:\Qt\Qt5.14.2\5.14.2\msvc2017_64\lib\qtmaind.lib shell32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib  -gencode=arch=compute_30,code=sm_30 -G --machine 64 x64\Debug\hrbfgenerator.cu.obj x64\Debug\hrbfgeneratordev.cu.obj x64\Debug\hrbfmanager.cu.obj x64\Debug\Vector3fDev.cu.obj x64\Debug\hrbfgenerator.cuh.obj x64\Debug\hrbfmanager.cuh.obj 
+  cudart.lib
+  cuda.lib
+  Foundation.lib
+  OpenMaya.lib
+  OpenMayaUI.lib
+  OpenMayaAnim.lib
+  OpenMayaFX.lib
+  OpenMayaRender.lib
+  Image.lib
+  opengl32.lib
+  Qt5Guid.lib
+  Qt5Cored.lib
+  qtmaind.lib
+  shell32.lib
+  kernel32.lib
+  user32.lib
+  gdi32.lib
+  winspool.lib
+  comdlg32.lib
+  advapi32.lib
+  ole32.lib
+  oleaut32.lib
+  uuid.lib
+  odbc32.lib
+  odbccp32.lib
+  hrbfgenerator.cu.obj
+  hrbfgeneratordev.cu.obj
+  hrbfmanager.cu.obj
+  Vector3fDev.cu.obj
+  hrbfgenerator.cuh.obj
+  hrbfmanager.cuh.obj
      Creating library debug\\implicitskin.lib and object debug\\implicitskin.exp
-  implicitskin.vcxproj -> H:\School Stuff\capstone_project\implicit_skin_gpu\debug\implicitskin.mll
+  implicitskin.vcxproj -> H:\School Stuff\capstone_project\Code\implicit_skin_gpu\debug\implicitskin.mll
